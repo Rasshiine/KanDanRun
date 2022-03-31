@@ -46,7 +46,6 @@ public class ObjectCreatorModel : MonoBehaviour
 
     void Create()
     {
-        Debug.Log("aa");
         for(int i = 0; i < barCount; i++)
         {
             bars[i]=

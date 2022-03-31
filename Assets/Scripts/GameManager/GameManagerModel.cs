@@ -54,6 +54,6 @@ public class GameManagerModel : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Break();
+       // Debug.Break();
     }
 }
