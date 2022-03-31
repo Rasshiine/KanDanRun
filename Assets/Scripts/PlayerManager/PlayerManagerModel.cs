@@ -56,6 +56,7 @@ public class PlayerManagerModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManagerModel.isGameStarted) return;
         if (isStressed)
         {
             playerHP -= damageSpeed * Time.deltaTime;

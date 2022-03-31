@@ -65,13 +65,13 @@ public class ObjectCreatorModel : MonoBehaviour
         }
         //bar一本分右に移動
         bars[1].transform.position += Vector3.right * distance * objectileCount;
-        Debug.Log(barDeadline);
     }
     
 
     // Update is called once per frame
     void Update()
     {
+        if (!GameManagerModel.isGameStarted) return;
         for (int i = 0; i < 2; i++)
         {
             bars[(currentBarNum + i) % barCount].transform.position += moveDistanceVector * Time.deltaTime;

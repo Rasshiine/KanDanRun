@@ -6,23 +6,29 @@ using UnityEngine.UI;
 
 public class GameManagerView : MonoBehaviour
 {
-    [SerializeField] Text scoreText;
+    [SerializeField] private Text scoreText;
+    [SerializeField] private Button titleButton;
+    [SerializeField] private Button startButton;
 
+    public event Action ReloadScene;
+    public event Action<GameObject> StartScene;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        titleButton.onClick.AddListener(() => ReloadScene?.Invoke());
+        titleButton.gameObject.SetActive(false);
+        startButton.onClick.AddListener(() => StartScene?.Invoke(startButton.gameObject));
+        startButton.gameObject.SetActive(true);
     }
 
     public void ShowScore(float score)
     {
         scoreText.text = score.ToString("f0");
     }
+
+    public void ActivateUIs()
+    {
+        titleButton.gameObject.SetActive(true);
+    }
+
 }

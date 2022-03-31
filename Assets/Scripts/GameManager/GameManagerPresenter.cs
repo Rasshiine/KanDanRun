@@ -11,7 +11,12 @@ public class GameManagerPresenter : MonoBehaviour
     {
         //Model → View
         gameManagerModel.ShowScore += gameManagerView.ShowScore;
-        gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;
+        gameManagerModel.ActivateUIs += gameManagerView.ActivateUIs;
 
+        //View → Model
+        gameManagerView.ReloadScene += gameManagerModel.ReloadScene;
+        gameManagerView.StartScene += gameManagerModel.StartScene;
+
+        gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;
     }
 }
