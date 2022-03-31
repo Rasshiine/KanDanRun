@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class TransitionMaker : MonoBehaviour
 {
-    [SerializeField] GameObject[] faces;
+    [SerializeField] GameObject canvas;
+    [SerializeField] GameObject face;
+    GameObject[] faceArray;
 
     private float width = 1280;
     private float height = 720;
@@ -15,7 +17,7 @@ public class TransitionMaker : MonoBehaviour
 
     private void Awake()
     {
-        faces = new GameObject[num_H * num_V];
+        faceArray = new GameObject[num_H * num_V];
     }
 
     // Start is called before the first frame update
@@ -25,19 +27,14 @@ public class TransitionMaker : MonoBehaviour
         {
             for(int j = 0; j < num_V; j++)
             {
-                Instantiate(faces[i * 3 + j],
-                    new Vector3
+                faceArray[i * 3 + j] =
+                    Instantiate(face, new Vector3
                     ((width / num_H) * i - width / 2,
                     -(height / num_V) * j + height / 2,
                     0),
                     Quaternion.identity);
+                faceArray[i * 3 + j].transform.SetParent(canvas.transform,false);
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
