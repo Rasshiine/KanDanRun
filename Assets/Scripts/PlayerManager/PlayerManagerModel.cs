@@ -31,15 +31,10 @@ public class PlayerManagerModel : MonoBehaviour
     public event Action<Color32> ChangeColor;
     public event Action GameOver;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    public void ChangeDamageState(bool? b)
+    public void ChangeDamageState(bool? isHouseWarm)
     {
-        isStressed = isPlayerWarm == b;
+        isStressed = isPlayerWarm == isHouseWarm;
     } 
 
     public void CheckOutsideAir()
@@ -50,13 +45,13 @@ public class PlayerManagerModel : MonoBehaviour
     public void ChangeOutSideAirState(bool b)
     {
         isOutsideWarm = b;
+        ChangePlayerState(!isOutsideWarm);
     }
-    
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManagerModel.isGameStarted) return;
+        if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
         if (isStressed)
         {
             playerHP -= damageSpeed * Time.deltaTime;
@@ -80,16 +75,9 @@ public class PlayerManagerModel : MonoBehaviour
         if (playerHP > 1) playerHP = 1;
     }
 
-    public void LetPlayerCool()
+    public void ChangePlayerState(bool isWarm)
     {
-        isPlayerWarm = false;
-        ChangeColor?.Invoke(blue);
+        isPlayerWarm = isWarm;
+        ChangeColor?.Invoke(isPlayerWarm ? red : blue);
     }
-
-    public void LetPlayerWarm()
-    {
-        isPlayerWarm = true;
-        ChangeColor?.Invoke(red);
-    }
-
 }

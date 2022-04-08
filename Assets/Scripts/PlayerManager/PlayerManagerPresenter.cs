@@ -17,8 +17,7 @@ public class PlayerManagerPresenter : MonoBehaviour
         //View → Model
         playerManagerView.CheckOutsideAir += playerManagerModel.CheckOutsideAir;
         playerManagerView.ChangeDamageState += playerManagerModel.ChangeDamageState;
-        playerManagerView.LetPlayerCool += playerManagerModel.LetPlayerCool;
-        playerManagerView.LetPlayerWarm += playerManagerModel.LetPlayerWarm;
+        playerManagerView.ChangePlayerState += playerManagerModel.ChangePlayerState;
 
         //Model → GameManagerModel
         playerManagerModel.GameOver += gameManagerModel.GameOver;

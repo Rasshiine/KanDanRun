@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class NameKeys : MonoBehaviour
 {
-   
+    public static readonly string warmTag = "Warm";
+    public static readonly string coolTag = "Cool";
+    public static readonly string invincibleTag = "Invincible";
 }

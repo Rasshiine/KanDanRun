@@ -71,29 +71,25 @@ public class ObjectCreatorModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManagerModel.isGameStarted) return;
-        for (int i = 0; i < 2; i++)
-        {
-            bars[(currentBarNum + i) % barCount].transform.position += moveDistanceVector * Time.deltaTime;
-            
-            bg02Pos[i].position += moveDistanceVector * bg02Magnification * Time.deltaTime;
-            
-        }
-
+        //雲の移動
         for (int i = 0; i < bg01Pos.Length; i++)
         {
             bg01Pos[i].position += moveDistanceVector * 0.05f * Time.deltaTime;
-            if(bg01Pos[i].position.x < bg01deadLine)
+            if (bg01Pos[i].position.x < bg01deadLine)
             {
                 bg01Pos[i].position = new Vector3(30, Random.Range(1f, 2f), 2);
             }
         }
 
-        
-        if (bars[currentBarNum % barCount].transform.position.x < barDeadline)
+        for (int i = 0; i < 2; i++)
         {
-            bars[currentBarNum % barCount].transform.position = defaultBarPos;
-            currentBarNum++;
+            //街並みを動かす
+            if (GameManagerModel.currentState != GameManagerModel.GameState.Finished) 
+            bg02Pos[i].position += moveDistanceVector * bg02Magnification * Time.deltaTime;
+
+            //家を動かす
+            if(GameManagerModel.currentState ==　GameManagerModel.GameState.Playing)
+            bars[(currentBarNum + i) % barCount].transform.position += moveDistanceVector * Time.deltaTime;
         }
 
         if (bg02Pos[currentbg02Num % 2].position.x < bg02deadLine)
@@ -101,10 +97,21 @@ public class ObjectCreatorModel : MonoBehaviour
             bg02Pos[currentbg02Num % 2].position = defaultBg02Pos;
             currentbg02Num++;
         }
+
+        if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;        
+
+        //家を初期位置に戻す
+        if (bars[currentBarNum % barCount].transform.position.x < barDeadline)
+        {
+            bars[currentBarNum % barCount].transform.position = defaultBarPos;
+            currentBarNum++;
+        }
     }
 
     public void ChangeSpeed(float speed)
     {
         moveDistanceVector = new Vector3(-speed, 0, 0);
     }
+
+
 }

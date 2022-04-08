@@ -16,8 +16,7 @@ public class PlayerManagerView : MonoBehaviour
 
     public event Action CheckOutsideAir;
     public event Action<bool?> ChangeDamageState;
-    public event Action LetPlayerCool;
-    public event Action LetPlayerWarm;
+    public event Action<bool> ChangePlayerState;
 
     private void Awake()
     {
@@ -29,12 +28,12 @@ public class PlayerManagerView : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            LetPlayerCool?.Invoke();
+            ChangePlayerState?.Invoke(false);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            LetPlayerWarm?.Invoke();
+            ChangePlayerState?.Invoke(true);
         }
 
         //ここMVPじゃないかもだけど許して
@@ -48,7 +47,12 @@ public class PlayerManagerView : MonoBehaviour
     {
         isInHouse = true;
         string tag = collision.gameObject.tag;
-        ChangeDamageState.Invoke(tag == "Warm");
+        if (tag == NameKeys.invincibleTag)
+        {
+            ChangeDamageState.Invoke(null);
+            return;
+        }
+        ChangeDamageState.Invoke(tag == NameKeys.warmTag);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Warm
   - Cool
+  - Invincible
   layers:
   - Default
   - TransparentFX
