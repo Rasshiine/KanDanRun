@@ -14,22 +14,15 @@ public class PlayerManagerModel : MonoBehaviour
     private bool isStressed = false;
 
 
-    private Color32 red = new Color(255, 0, 0);
-    private Color32 blue = new Color(0, 0, 255);
+    //private Color32 red = new Color(255, 0, 0);
+    //private Color32 blue = new Color(0, 0, 255);
 
-    //private enum PlayerState
-    //{
-    //    Warm = 0,
-    //    Cool = 1
-    //}
-
-
-    //private PlayerState state;
-    //private PlayerState outsideAir;
 
     public event Action<float> ShowHP;
-    public event Action<Color32> ChangeColor;
+    public event Action<bool> ChangeAnimation;
     public event Action GameOver;
+    public event Action ChangeToGameOverAnimation;
+
 
 
     public void ChangeDamageState(bool? isHouseWarm)
@@ -45,12 +38,14 @@ public class PlayerManagerModel : MonoBehaviour
     public void ChangeOutSideAirState(bool b)
     {
         isOutsideWarm = b;
+        if (GameManagerModel.currentState != GameManagerModel.GameState.notStarted) return;
         ChangePlayerState(!isOutsideWarm);
     }
 
     // Update is called once per frame
     void Update()
     {
+      //  Debug.Log(isStressed);
         if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
         if (isStressed)
         {
@@ -59,6 +54,7 @@ public class PlayerManagerModel : MonoBehaviour
             if (playerHP <= 0)
             {
                 GameOver?.Invoke();
+                ChangeToGameOverAnimation?.Invoke();
             }
         }
         else
@@ -78,6 +74,8 @@ public class PlayerManagerModel : MonoBehaviour
     public void ChangePlayerState(bool isWarm)
     {
         isPlayerWarm = isWarm;
-        ChangeColor?.Invoke(isPlayerWarm ? red : blue);
+        ChangeAnimation?.Invoke(isPlayerWarm);
     }
+
+    public bool ReturnIsStressed() => isStressed;
 }

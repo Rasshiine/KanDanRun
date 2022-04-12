@@ -7,7 +7,10 @@ public class ObjectCreatorModel : MonoBehaviour
     [SerializeField] private GameObject[] objects;
     [SerializeField] private Transform[] bg01Pos;
     [SerializeField] private Transform[] bg02Pos;
-    //private float[] lengths;
+    [SerializeField] private Transform[] groundPos;
+
+    [SerializeField] private GameObject boyFaceCloud;
+
     private Vector3 defaultPos = new Vector3(10, 0, 0.1f);
     private Vector3 moveDistanceVector;
 
@@ -35,11 +38,13 @@ public class ObjectCreatorModel : MonoBehaviour
     float barDeadline;
     private Vector3 defaultBarPos = new Vector3(25, -1, 1);
 
-    float bg01deadLine = -10;
+    float bg01deadLine = -20;
     //下の二つは微妙に位置調整した実質マジックナンバー
     float bg02deadLine = -30;
     private Vector3 defaultBg01Pos;
     private Vector3 defaultBg02Pos;
+    private Vector3 defaultgroundPos;
+    
 
     GameObject[] bars;
 
@@ -65,6 +70,8 @@ public class ObjectCreatorModel : MonoBehaviour
         }
         //bar一本分右に移動
         bars[1].transform.position += Vector3.right * distance * objectileCount;
+
+        defaultgroundPos = groundPos[1].position;
     }
     
 
@@ -74,22 +81,34 @@ public class ObjectCreatorModel : MonoBehaviour
         //雲の移動
         for (int i = 0; i < bg01Pos.Length; i++)
         {
-            bg01Pos[i].position += moveDistanceVector * 0.05f * Time.deltaTime;
+            bg01Pos[i].position += moveDistanceVector * 1 * Time.deltaTime;
             if (bg01Pos[i].position.x < bg01deadLine)
             {
-                bg01Pos[i].position = new Vector3(30, Random.Range(1f, 2f), 2);
+                if (Random.Range(0.0f, 1.0f) < 1)
+                {
+                    GameObject g = Instantiate(boyFaceCloud, Vector3.zero, Quaternion.identity);
+                    bg01Pos[i] = g.transform;
+                }
+                    
+                bg01Pos[i].position = new Vector3(-bg01deadLine, Random.Range(1f, 2f), 2);
             }
         }
 
         for (int i = 0; i < 2; i++)
         {
             //街並みを動かす
-            if (GameManagerModel.currentState != GameManagerModel.GameState.Finished) 
-            bg02Pos[i].position += moveDistanceVector * bg02Magnification * Time.deltaTime;
+            if (GameManagerModel.currentState != GameManagerModel.GameState.Finished)
+            {
+                bg02Pos[i].position += moveDistanceVector * bg02Magnification * Time.deltaTime;
+                groundPos[i].position += moveDistanceVector * Time.deltaTime;
+            }
 
             //家を動かす
-            if(GameManagerModel.currentState ==　GameManagerModel.GameState.Playing)
+            if (GameManagerModel.currentState ==　GameManagerModel.GameState.Playing)
             bars[(currentBarNum + i) % barCount].transform.position += moveDistanceVector * Time.deltaTime;
+
+            if (groundPos[i].position.x < -defaultgroundPos.x)
+                groundPos[i].position = defaultgroundPos;
         }
 
         if (bg02Pos[currentbg02Num % 2].position.x < bg02deadLine)
@@ -97,6 +116,8 @@ public class ObjectCreatorModel : MonoBehaviour
             bg02Pos[currentbg02Num % 2].position = defaultBg02Pos;
             currentbg02Num++;
         }
+
+        
 
         if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;        
 

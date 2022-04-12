@@ -6,34 +6,46 @@ using UnityEngine.UI;
 
 public class PlayerManagerView : MonoBehaviour
 {
-    private SpriteRenderer playerSpriteRenderer;
-    private Color32 red = new Color(255, 0, 0);
-    private Color32 blue = new Color(0, 0, 255);
-
     [SerializeField] Image stressGage;
 
     private bool isInHouse = false;
 
+    private Animator animator;
+
     public event Action CheckOutsideAir;
     public event Action<bool?> ChangeDamageState;
     public event Action<bool> ChangePlayerState;
+    //Func:Actionの戻り値ありバージョン
+    public event Func<bool> ReturnIsStressed;
+
+
 
     private void Awake()
     {
-        playerSpriteRenderer = GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
     }
-   
+
     // Update is called once per frame
     void Update()
     {
+        if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log(animator);
+            ChangeAnimation(false);
+        }
+
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             ChangePlayerState?.Invoke(false);
+            animator.SetBool(NameKeys.anim_isPlayerWarm, false);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             ChangePlayerState?.Invoke(true);
+            animator.SetBool(NameKeys.anim_isPlayerWarm, true);
         }
 
         //ここMVPじゃないかもだけど許して
@@ -41,13 +53,14 @@ public class PlayerManagerView : MonoBehaviour
         {
             CheckOutsideAir?.Invoke();
         }
+        animator.SetBool(NameKeys.anim_isStressed, ReturnIsStressed());
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         isInHouse = true;
         string tag = collision.gameObject.tag;
-        if (tag == NameKeys.invincibleTag)
+        if (tag == NameKeys.invincibleTag && !ReturnIsStressed())
         {
             ChangeDamageState.Invoke(null);
             return;
@@ -61,17 +74,19 @@ public class PlayerManagerView : MonoBehaviour
         ChangeDamageState.Invoke(null);
     }
 
-
-
-
     public void ShowPlayerHP(float hp)
     {
         stressGage.fillAmount = hp;
     }
 
-    public void ChangeColor(Color32 c)
+    //↓AnimationのStateとか、全部boolじゃなくてenumでやった方が良さそう
+    public void ChangeAnimation(bool isPlayerWarm)
     {
-        playerSpriteRenderer.color = c;
+        animator.SetBool(NameKeys.anim_isPlayerWarm, isPlayerWarm);
     }
 
+    public void ChangeToGameOverAnimation()
+    {
+        animator.SetBool(NameKeys.anim_isGameOver, true);
+    }
 }

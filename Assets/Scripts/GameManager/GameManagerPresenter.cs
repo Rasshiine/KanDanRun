@@ -17,7 +17,6 @@ public class GameManagerPresenter : MonoBehaviour
         gameManagerModel.ChangeWeatherWithNoMotion += gameManagerView.ChangeWeatherWithNoMotion;
 
         //View → Model
-        gameManagerView.ReloadScene += gameManagerModel.ReloadScene;
         gameManagerView.StartScene += gameManagerModel.StartScene;
 
         gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;

@@ -13,7 +13,7 @@ public class GameManagerModel : MonoBehaviour
     private float score = 0;
     private float defaultPlayerSpeed = 3;
     private float playerSpeed = 3;
-    private float probabilityOfChangeWeather = 0.3f;
+    private float probabilityOfChangeWeather = 1f;
 
     private bool isOutsideWarm;
 
@@ -25,9 +25,6 @@ public class GameManagerModel : MonoBehaviour
     }
 
     public static GameState currentState;
-
-    [SerializeField] Texture2D texture;
-    [SerializeField] Canvas valueCanvas;
 
     public event Action<bool> ChangeOutSideAirState;
     public event Action<float> ShowScore;
@@ -49,16 +46,12 @@ public class GameManagerModel : MonoBehaviour
         isOutsideWarm = UnityEngine.Random.Range(0, 2) == 0;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
         ChangeWeatherWithNoMotion?.Invoke(isOutsideWarm);
-        valueCanvas.gameObject.SetActive(false);
     }
 
     //ゲームスタートの処理
-    public void StartScene(GameObject startButton)
+    public void StartScene()
     {
         currentState = GameState.Playing;
-        //isGamePlaying = true;
-        startButton.SetActive(false);
-        valueCanvas.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -83,7 +76,8 @@ public class GameManagerModel : MonoBehaviour
             ChangeSpeed?.Invoke(playerSpeed);
             if (UnityEngine.Random.Range(0.0f, 1.0f) < probabilityOfChangeWeather)
             {
-                ChangeOutSideAirState?.Invoke(!isOutsideWarm);
+                isOutsideWarm = !isOutsideWarm;
+                ChangeOutSideAirState?.Invoke(isOutsideWarm);
                 ChangeWeather?.Invoke();
             }
         }        
@@ -94,20 +88,5 @@ public class GameManagerModel : MonoBehaviour
         currentState = GameState.Finished;
         //isGamePlaying = false;
         ActivateUIs?.Invoke();
-    }
-
-    public void ReloadScene()
-    {
-        var pixelater = new ImageMaskTransition()
-        {
-            nextScene = 0,
-            maskTexture = texture,
-            backgroundColor = Color.green,
-            //backgroundColor = new Color(120, 241, 83),
-            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
-            duration = 1.0f
-        };
-        TransitionKit.instance.transitionWithDelegate(pixelater);
-
     }
 }

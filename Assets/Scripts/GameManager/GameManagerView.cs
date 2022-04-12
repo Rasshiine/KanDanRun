@@ -4,26 +4,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Prime31.TransitionKit;
 
 public class GameManagerView : MonoBehaviour
 {
     [SerializeField] private Text scoreText;
     [SerializeField] private Button titleButton;
     [SerializeField] private Button startButton;
+    [SerializeField] private Button creditButton;
+    [SerializeField] private Button howToPlayButton;
+
+    [SerializeField] private Canvas valueCanvas;
+
+    [SerializeField] Texture2D texture;
 
     [SerializeField] private Transform weatherTransform;
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
-    public event Action ReloadScene;
-    public event Action<GameObject> StartScene;
+    public event Action StartScene;
 
     private void Awake()
     {
-        titleButton.onClick.AddListener(() => ReloadScene?.Invoke());
-        titleButton.gameObject.SetActive(false);
-        startButton.onClick.AddListener(() => StartScene?.Invoke(startButton.gameObject));
-        startButton.gameObject.SetActive(true);
+        titleButton.onClick.AddListener(() => ReloadScene());
+        startButton.onClick.AddListener(() => StartButton());
+        creditButton.onClick.AddListener(() => CreditButton());
+        howToPlayButton.onClick.AddListener(() => HowToPlayButton());
     }
+
+    private void Start()
+    {
+        valueCanvas.gameObject.SetActive(false);
+
+        titleButton.gameObject.SetActive(false);
+        startButton.gameObject.SetActive(true);
+        creditButton.gameObject.SetActive(true);
+        howToPlayButton.gameObject.SetActive(true);
+    }
+
+    public void ReloadScene()
+    {
+        var pixelater = new ImageMaskTransition()
+        {
+            nextScene = 0,
+            maskTexture = texture,
+            backgroundColor = Color.green,
+            //backgroundColor = new Color(120, 241, 83),
+            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
+            duration = 1.0f
+        };
+        TransitionKit.instance.transitionWithDelegate(pixelater);
+
+    }
+
+    void StartButton()
+    {
+        valueCanvas.gameObject.SetActive(true);
+        startButton.gameObject.SetActive(false);
+        StartScene?.Invoke();
+    }
+
+    void CreditButton()
+    {
+
+    }
+
+    void HowToPlayButton()
+    {
+
+    }
+
 
     public void ShowScore(float score)
     {
@@ -45,6 +94,5 @@ public class GameManagerView : MonoBehaviour
     public void ChangeWeatherWithNoMotion(bool isWarm)
     {
         weatherTransform.rotation = Quaternion.Euler(0, 0, isWarm ? 180 : 0);
-        Debug.Log(isWarm);
     }
 }

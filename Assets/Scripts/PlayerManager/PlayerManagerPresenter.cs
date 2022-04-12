@@ -12,12 +12,14 @@ public class PlayerManagerPresenter : MonoBehaviour
     {
         //Model → View
         playerManagerModel.ShowHP += playerManagerView.ShowPlayerHP;
-        playerManagerModel.ChangeColor += playerManagerView.ChangeColor;
+        playerManagerModel.ChangeAnimation += playerManagerView.ChangeAnimation;
+        playerManagerModel.ChangeToGameOverAnimation += playerManagerView.ChangeToGameOverAnimation;
 
         //View → Model
         playerManagerView.CheckOutsideAir += playerManagerModel.CheckOutsideAir;
         playerManagerView.ChangeDamageState += playerManagerModel.ChangeDamageState;
         playerManagerView.ChangePlayerState += playerManagerModel.ChangePlayerState;
+        playerManagerView.ReturnIsStressed += playerManagerModel.ReturnIsStressed;
 
         //Model → GameManagerModel
         playerManagerModel.GameOver += gameManagerModel.GameOver;
