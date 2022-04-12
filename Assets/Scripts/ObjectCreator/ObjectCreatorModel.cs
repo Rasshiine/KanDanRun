@@ -62,7 +62,7 @@ public class ObjectCreatorModel : MonoBehaviour
             {
                 Instantiate(
                     objects[Random.Range(0, objects.Length)],
-                    defaultBarPos + Vector3.right * distance * j,
+                    defaultBarPos + Vector3.right * (distance * j + Random.Range(-3f, 3f)),
                     Quaternion.identity)
                     .transform.parent
               = bars[i].transform;
