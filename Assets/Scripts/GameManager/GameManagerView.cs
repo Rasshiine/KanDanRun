@@ -9,10 +9,11 @@ using Prime31.TransitionKit;
 public class GameManagerView : MonoBehaviour
 {
     [SerializeField] private Text scoreText;
-    [SerializeField] private Button titleButton;
     [SerializeField] private Button startButton;
     [SerializeField] private Button creditButton;
     [SerializeField] private Button howToPlayButton;
+    [SerializeField] private Button titleButton;
+    [SerializeField] private Button rankingButton;
 
     [SerializeField] private Canvas valueCanvas;
 
@@ -22,39 +23,29 @@ public class GameManagerView : MonoBehaviour
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
     public event Action StartScene;
+    public event Func<int> GetScore;
 
     private void Awake()
     {
-        titleButton.onClick.AddListener(() => ReloadScene());
         startButton.onClick.AddListener(() => StartButton());
         creditButton.onClick.AddListener(() => CreditButton());
         howToPlayButton.onClick.AddListener(() => HowToPlayButton());
+        titleButton.onClick.AddListener(() => ReloadScene());
+        rankingButton.onClick.AddListener(() => RankingButton());
     }
 
     private void Start()
     {
         valueCanvas.gameObject.SetActive(false);
 
-        titleButton.gameObject.SetActive(false);
         startButton.gameObject.SetActive(true);
         creditButton.gameObject.SetActive(true);
         howToPlayButton.gameObject.SetActive(true);
+        titleButton.gameObject.SetActive(false);
+        rankingButton.gameObject.SetActive(false);
     }
 
-    public void ReloadScene()
-    {
-        var pixelater = new ImageMaskTransition()
-        {
-            nextScene = 0,
-            maskTexture = texture,
-            backgroundColor = Color.green,
-            //backgroundColor = new Color(120, 241, 83),
-            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
-            duration = 1.0f
-        };
-        TransitionKit.instance.transitionWithDelegate(pixelater);
-
-    }
+    
 
     void StartButton()
     {
@@ -73,6 +64,26 @@ public class GameManagerView : MonoBehaviour
 
     }
 
+    public void ReloadScene()
+    {
+        var pixelater = new ImageMaskTransition()
+        {
+            nextScene = 0,
+            maskTexture = texture,
+            backgroundColor = Color.green,
+            //backgroundColor = new Color(120, 241, 83),
+            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
+            duration = 1.0f
+        };
+        TransitionKit.instance.transitionWithDelegate(pixelater);
+
+    }
+
+    void RankingButton()
+    {
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(GetScore());
+    }
+
 
     public void ShowScore(float score)
     {
@@ -82,6 +93,7 @@ public class GameManagerView : MonoBehaviour
     public void ActivateUIs()
     {
         titleButton.gameObject.SetActive(true);
+        rankingButton.gameObject.SetActive(true);
     }
 
     public void ChangeWeather()

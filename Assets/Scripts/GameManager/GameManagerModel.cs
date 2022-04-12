@@ -69,7 +69,7 @@ public class GameManagerModel : MonoBehaviour
         ShowScore?.Invoke(score);
 
         //レベル上昇
-        if(score > levelUpInterval * (level + 1))
+        if (score > levelUpInterval * (level + 1))
         {
             level++;
             playerSpeed = defaultPlayerSpeed * (1 + magnification * level);
@@ -80,13 +80,15 @@ public class GameManagerModel : MonoBehaviour
                 ChangeOutSideAirState?.Invoke(isOutsideWarm);
                 ChangeWeather?.Invoke();
             }
-        }        
+        }
     }
 
     public void GameOver()
     {
         currentState = GameState.Finished;
-        //isGamePlaying = false;
         ActivateUIs?.Invoke();
     }
+
+    public int GetScore() => (int)score;
+
 }

@@ -18,6 +18,7 @@ public class GameManagerPresenter : MonoBehaviour
 
         //View → Model
         gameManagerView.StartScene += gameManagerModel.StartScene;
+        gameManagerView.GetScore += gameManagerModel.GetScore;
 
         gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;
     }
