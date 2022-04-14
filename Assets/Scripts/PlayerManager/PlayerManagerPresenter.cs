@@ -7,6 +7,7 @@ public class PlayerManagerPresenter : MonoBehaviour
     [SerializeField] PlayerManagerModel playerManagerModel;
     [SerializeField] PlayerManagerView playerManagerView;
     [SerializeField] GameManagerModel gameManagerModel;
+    [SerializeField] SEManagerModel sEManagerModel;
 
     private void Awake()
     {
@@ -14,7 +15,7 @@ public class PlayerManagerPresenter : MonoBehaviour
         playerManagerModel.ShowHP += playerManagerView.ShowPlayerHP;
         playerManagerModel.ChangeAnimation += playerManagerView.ChangeAnimation;
         playerManagerModel.ChangeToGameOverAnimation += playerManagerView.ChangeToGameOverAnimation;
-
+        
         //View → Model
         playerManagerView.CheckOutsideAir += playerManagerModel.CheckOutsideAir;
         playerManagerView.ChangeDamageState += playerManagerModel.ChangeDamageState;
@@ -26,6 +27,9 @@ public class PlayerManagerPresenter : MonoBehaviour
 
         //GameManagerModel → Model
         gameManagerModel.ChangeOutSideAirState += playerManagerModel.ChangeOutSideAirState;
+
+        //View → SEManagerModel
+        playerManagerView.SE_ChangeCloth += sEManagerModel.ChangeCloth;
     }
 
 }

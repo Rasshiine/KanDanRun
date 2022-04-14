@@ -9,7 +9,7 @@ public class ObjectCreatorModel : MonoBehaviour
     [SerializeField] private Transform[] bg02Pos;
     [SerializeField] private Transform[] groundPos;
 
-    [SerializeField] private GameObject boyFaceCloud;
+    [SerializeField] private GameObject[] clouds;
 
     private Vector3 defaultPos = new Vector3(10, 0, 0.1f);
     private Vector3 moveDistanceVector;
@@ -48,6 +48,7 @@ public class ObjectCreatorModel : MonoBehaviour
 
     GameObject[] bars;
 
+    float possibilityOfBoyCloud = 0.05f;
 
     void Create()
     {
@@ -84,11 +85,13 @@ public class ObjectCreatorModel : MonoBehaviour
             bg01Pos[i].position += moveDistanceVector * 1 * Time.deltaTime;
             if (bg01Pos[i].position.x < bg01deadLine)
             {
-                if (Random.Range(0.0f, 1.0f) < 1)
-                {
-                    GameObject g = Instantiate(boyFaceCloud, Vector3.zero, Quaternion.identity);
-                    bg01Pos[i] = g.transform;
-                }
+                Destroy(bg01Pos[i].gameObject);
+                float rand = Random.Range(0.0f, 1.0f);
+                int tmp = 2;
+                if (rand < (1 - possibilityOfBoyCloud) / 2) tmp = 0;
+                else if(rand < (1 - possibilityOfBoyCloud)) tmp = 1;
+                GameObject g = Instantiate(clouds[tmp], Vector3.zero, Quaternion.identity);
+                bg01Pos[i] = g.transform;
                     
                 bg01Pos[i].position = new Vector3(-bg01deadLine, Random.Range(1f, 2f), 2);
             }

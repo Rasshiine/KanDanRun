@@ -45,8 +45,6 @@ public class GameManagerView : MonoBehaviour
         rankingButton.gameObject.SetActive(false);
     }
 
-    
-
     void StartButton()
     {
         valueCanvas.gameObject.SetActive(true);

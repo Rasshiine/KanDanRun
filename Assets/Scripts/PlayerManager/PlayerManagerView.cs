@@ -18,6 +18,8 @@ public class PlayerManagerView : MonoBehaviour
     //Func:Actionの戻り値ありバージョン
     public event Func<bool> ReturnIsStressed;
 
+    public event Action SE_ChangeCloth;
+
 
 
     private void Awake()
@@ -29,31 +31,22 @@ public class PlayerManagerView : MonoBehaviour
     void Update()
     {
         if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log(animator);
-            ChangeAnimation(false);
-        }
-
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            ChangePlayerState?.Invoke(false);
-            animator.SetBool(NameKeys.anim_isPlayerWarm, false);
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            ChangePlayerState?.Invoke(true);
-            animator.SetBool(NameKeys.anim_isPlayerWarm, true);
-        }
-
+    
         //ここMVPじゃないかもだけど許して
         if (!isInHouse)
         {
             CheckOutsideAir?.Invoke();
         }
         animator.SetBool(NameKeys.anim_isStressed, ReturnIsStressed());
+
+        bool? inp = null;
+        if (Input.GetKeyDown(KeyCode.UpArrow)) inp = false;
+        if (Input.GetKeyDown(KeyCode.DownArrow)) inp = true;
+        if (inp == null) return;
+
+        ChangePlayerState?.Invoke((bool)inp);
+        animator.SetBool(NameKeys.anim_isPlayerWarm, (bool)inp);
+        SE_ChangeCloth?.Invoke();
     }
 
     private void OnTriggerStay2D(Collider2D collision)

@@ -32,6 +32,8 @@ public class GameManagerModel : MonoBehaviour
     public event Action ActivateUIs;
     public event Action ChangeWeather;
     public event Action<bool> ChangeWeatherWithNoMotion;
+    public event Action SE_ChangeWeather;
+    public event Action SE_LevelUp;
 
     void Awake()
     {
@@ -57,12 +59,7 @@ public class GameManagerModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ChangeWeather?.Invoke();
-        }
         if (currentState != GameState.Playing) return;
-        //if (!isGamePlaying) return;
 
         //スコア加算
         score += playerSpeed * Time.deltaTime;

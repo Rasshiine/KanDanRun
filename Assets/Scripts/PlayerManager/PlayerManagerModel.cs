@@ -13,17 +13,10 @@ public class PlayerManagerModel : MonoBehaviour
     private bool isOutsideWarm = false;
     private bool isStressed = false;
 
-
-    //private Color32 red = new Color(255, 0, 0);
-    //private Color32 blue = new Color(0, 0, 255);
-
-
     public event Action<float> ShowHP;
     public event Action<bool> ChangeAnimation;
     public event Action GameOver;
     public event Action ChangeToGameOverAnimation;
-
-
 
     public void ChangeDamageState(bool? isHouseWarm)
     {
