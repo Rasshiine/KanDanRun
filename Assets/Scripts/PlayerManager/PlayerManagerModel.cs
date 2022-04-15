@@ -20,6 +20,7 @@ public class PlayerManagerModel : MonoBehaviour
 
     public void ChangeDamageState(bool? isHouseWarm)
     {
+        //Debug.Log(isPlayerWarm == isHouseWarm);
         isStressed = isPlayerWarm == isHouseWarm;
     } 
 
@@ -38,10 +39,10 @@ public class PlayerManagerModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      //  Debug.Log(isStressed);
         if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
         if (isStressed)
         {
+            Debug.Log("isssss");
             playerHP -= damageSpeed * Time.deltaTime;
             CancelInvoke(nameof(HealDamage));
             if (playerHP <= 0)
@@ -70,5 +71,9 @@ public class PlayerManagerModel : MonoBehaviour
         ChangeAnimation?.Invoke(isPlayerWarm);
     }
 
-    public bool ReturnIsStressed() => isStressed;
+    public bool ReturnIsStressed()
+    {
+       // Debug.Log(isStressed);
+        return isStressed;
+    }
 }

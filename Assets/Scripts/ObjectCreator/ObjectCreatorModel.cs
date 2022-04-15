@@ -13,7 +13,7 @@ public class ObjectCreatorModel : MonoBehaviour
 
     private Vector3 defaultPos = new Vector3(10, 0, 0.1f);
     private Vector3 moveDistanceVector;
-
+    private Vector3 cloudMovingVector = new Vector3(-0.2f, 0, 0);
     private float bg01Magnification = 0.2f;
     private float bg02Magnification = 0.4f;
 
@@ -82,7 +82,7 @@ public class ObjectCreatorModel : MonoBehaviour
         //雲の移動
         for (int i = 0; i < bg01Pos.Length; i++)
         {
-            bg01Pos[i].position += moveDistanceVector * 1 * Time.deltaTime;
+            bg01Pos[i].position += cloudMovingVector * Time.deltaTime;
             if (bg01Pos[i].position.x < bg01deadLine)
             {
                 Destroy(bg01Pos[i].gameObject);

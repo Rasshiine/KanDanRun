@@ -6,7 +6,8 @@ public class NameKeys : MonoBehaviour
 {
     public static readonly string warmTag = "Warm";
     public static readonly string coolTag = "Cool";
-    public static readonly string invincibleTag = "Invincible";
+    public static readonly string House_FrontTag = "House_Front";
+    public static readonly string House_BackTag = "House_Back";
 
     public static readonly string anim_isPlayerWarm = "isPlayerWarm";
     public static readonly string anim_isGameOver = "isGameOver";

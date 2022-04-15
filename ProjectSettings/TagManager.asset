@@ -6,7 +6,8 @@ TagManager:
   tags:
   - Warm
   - Cool
-  - Invincible
+  - House_Front
+  - House_Back
   layers:
   - Default
   - TransparentFX

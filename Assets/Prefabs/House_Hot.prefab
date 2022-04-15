@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7254856185256229805}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Invincible
+  m_TagString: House_Front
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -207,7 +207,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.11281377, y: 0}
+  m_Offset: {x: 0.12802178, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -218,7 +218,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.8652253, y: 5.88}
+  m_Size: {x: 4.233946, y: 5.88}
   m_EdgeRadius: 0
 --- !u!1 &6781071655717775822
 GameObject:
@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 1321345661723455260}
   m_Layer: 0
   m_Name: Square (1)
-  m_TagString: Invincible
+  m_TagString: House_Back
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

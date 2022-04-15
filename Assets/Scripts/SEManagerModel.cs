@@ -27,5 +27,5 @@ public class SEManagerModel : MonoBehaviour
     public void ChangeCloth() => audioSource.PlayOneShot(changeCloth);
     public void Damaged_Hot() => audioSource.PlayOneShot(damaged_Hot);
     public void Damaged_Cold() => audioSource.PlayOneShot(damaged_Cold);
-    public void GameOverSound() => audioSource.PlayOneShot(gameOver);
+    public void GameOverSound() => audioSource.PlayOneShot(gameOver); 
 }

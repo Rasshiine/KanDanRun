@@ -61,7 +61,7 @@ public class GameManagerView : MonoBehaviour
     {
 
     }
-
+    
     public void ReloadScene()
     {
         var pixelater = new ImageMaskTransition()
@@ -71,7 +71,8 @@ public class GameManagerView : MonoBehaviour
             backgroundColor = Color.green,
             //backgroundColor = new Color(120, 241, 83),
             //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
-            duration = 1.0f
+            duration = 0.3f,
+            
         };
         TransitionKit.instance.transitionWithDelegate(pixelater);
 
