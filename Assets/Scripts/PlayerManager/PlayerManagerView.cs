@@ -50,23 +50,13 @@ public class PlayerManagerView : MonoBehaviour
     }
 
     bool isStressed = false;
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (tag != NameKeys.House_FrontTag) return;
-        isStressed = ReturnIsStressed();
-    }
-    bool a = true;
-    private void OnTriggerStay2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
     //{
-    //    if (a != ReturnIsStressed())
-    //    {
-    //        Debug.Log("ReturnIsStressed= " +ReturnIsStressed());
-    //        Debug.Log("Isinhouse = " + isInHouse);
+    //    if (tag != NameKeys.House_FrontTag) return;
+    //    isStressed = ReturnIsStressed();
+    //}
 
-    //        a = !a;
-    //    }
-
-
+    private void OnTriggerStay2D(Collider2D collision)
     { 
 
         isInHouse = true;
@@ -79,18 +69,18 @@ public class PlayerManagerView : MonoBehaviour
         //    return;
         //}
 
-        if (tag == NameKeys.House_FrontTag && isStressed)
-        {
-            ChangeDamageState.Invoke(null);
-            return;
-        }
+        //if (tag == NameKeys.House_FrontTag && isStressed)
+        //{
+        //    ChangeDamageState.Invoke(null);
+        //    return;
+        //}
         //if (tag == NameKeys.invincibleTag && !ReturnIsStressed()) Debug.Break();
         ChangeDamageState.Invoke(tag == NameKeys.warmTag);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag != NameKeys.House_BackTag) return;
+       // if (collision.gameObject.tag != NameKeys.House_BackTag) return;
         isInHouse = false;
         ChangeDamageState.Invoke(null);
     }

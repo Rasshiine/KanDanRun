@@ -6,12 +6,16 @@ using UnityEngine;
 public class PlayerManagerModel : MonoBehaviour
 {
     private float playerHP = 1;
-    private float damageSpeed = 0.2f;
+    private float damageSpeed = 0.4f;
     private float healingSpeed = 0.05f;
-    private float healingInterval = 1.0f;
+    private float healingInterval = 2.0f;
     private bool isPlayerWarm = false;
     private bool isOutsideWarm = false;
     private bool isStressed = false;
+
+    private bool isInvincible = false;
+    private float invincibleTimer = 0f;
+    private float limitOfinvincibleTimer = 0.3f;
 
     public event Action<float> ShowHP;
     public event Action<bool> ChangeAnimation;
@@ -40,9 +44,11 @@ public class PlayerManagerModel : MonoBehaviour
     void Update()
     {
         if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
+
+        CountInvincibleTimer();
+        
         if (isStressed)
         {
-            Debug.Log("isssss");
             playerHP -= damageSpeed * Time.deltaTime;
             CancelInvoke(nameof(HealDamage));
             if (playerHP <= 0)
@@ -65,15 +71,35 @@ public class PlayerManagerModel : MonoBehaviour
         if (playerHP > 1) playerHP = 1;
     }
 
+    void CountInvincibleTimer()
+    {
+        if (!isInvincible) return;
+        isStressed = false;
+        invincibleTimer += Time.deltaTime;
+
+        if (invincibleTimer < limitOfinvincibleTimer) return;
+        ResetInvincible();
+    }
+
     public void ChangePlayerState(bool isWarm)
     {
+        ResetInvincible();
+        if (isPlayerWarm == isWarm) return;
         isPlayerWarm = isWarm;
         ChangeAnimation?.Invoke(isPlayerWarm);
+
+        if (isStressed) return;
+        isInvincible = true;
+    }
+
+    void ResetInvincible()
+    {
+        isInvincible = false;
+        invincibleTimer = 0;
     }
 
     public bool ReturnIsStressed()
     {
-       // Debug.Log(isStressed);
         return isStressed;
     }
 }
