@@ -8,6 +8,7 @@ public class GameManagerPresenter : MonoBehaviour
     [SerializeField] GameManagerView gameManagerView;
     [SerializeField] ObjectCreatorModel objectCreatorModel;
     [SerializeField] SEManagerModel sEManagerModel;
+    [SerializeField] BGMManagerModel bGMManagerModel;
 
     private void Awake()
     {
@@ -25,7 +26,11 @@ public class GameManagerPresenter : MonoBehaviour
         gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;
 
         //Model → SEManagerModel
+        gameManagerModel.SE_StartButton += sEManagerModel.StartButton;
         gameManagerModel.SE_ChangeWeather += sEManagerModel.ChangeWeather;
         gameManagerModel.SE_LevelUp += sEManagerModel.LevelUp;
+
+        //Model → BGMManagerModel
+        gameManagerModel.IncreasePitch += bGMManagerModel.IncreasePitch;
     }
 }

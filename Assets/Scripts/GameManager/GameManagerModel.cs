@@ -11,8 +11,8 @@ public class GameManagerModel : MonoBehaviour
     private float levelUpInterval = 100;
     private float magnification = 0.2f;
     private float score = 0;
-    private float defaultPlayerSpeed = 3;
-    private float playerSpeed = 3;
+    private float defaultPlayerSpeed = 5;
+    private float playerSpeed = 0;
     private float probabilityOfChangeWeather = 1f;
 
     private bool isOutsideWarm;
@@ -32,18 +32,21 @@ public class GameManagerModel : MonoBehaviour
     public event Action ActivateUIs;
     public event Action ChangeWeather;
     public event Action<bool> ChangeWeatherWithNoMotion;
+    public event Action SE_StartButton;
     public event Action SE_ChangeWeather;
     public event Action SE_LevelUp;
+    public event Action IncreasePitch;
 
     void Awake()
     {
-        ChangeSpeed?.Invoke(playerSpeed);
         currentState = GameState.notStarted;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        playerSpeed = defaultPlayerSpeed;
+        ChangeSpeed?.Invoke(playerSpeed);
         //外気温を変化させる処理（ランダムか固定か）、背景変更の処理を書く
         isOutsideWarm = UnityEngine.Random.Range(0, 2) == 0;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
@@ -53,6 +56,7 @@ public class GameManagerModel : MonoBehaviour
     //ゲームスタートの処理
     public void StartScene()
     {
+        SE_StartButton?.Invoke();
         currentState = GameState.Playing;
     }
 
@@ -71,6 +75,7 @@ public class GameManagerModel : MonoBehaviour
             level++;
             playerSpeed = defaultPlayerSpeed * (1 + magnification * level);
             ChangeSpeed?.Invoke(playerSpeed);
+            IncreasePitch?.Invoke();
             if (UnityEngine.Random.Range(0.0f, 1.0f) < probabilityOfChangeWeather)
             {
                 isOutsideWarm = !isOutsideWarm;

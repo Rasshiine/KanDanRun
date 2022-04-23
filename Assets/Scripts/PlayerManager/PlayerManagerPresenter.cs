@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerManagerPresenter : MonoBehaviour
 {
-    [SerializeField] PlayerManagerModel playerManagerModel;
-    [SerializeField] PlayerManagerView playerManagerView;
-    [SerializeField] GameManagerModel gameManagerModel;
-    [SerializeField] SEManagerModel sEManagerModel;
+    [SerializeField] private PlayerManagerModel playerManagerModel;
+    [SerializeField] private PlayerManagerView playerManagerView;
+    [SerializeField] private GameManagerModel gameManagerModel;
+    [SerializeField] private SEManagerModel sEManagerModel;
+    [SerializeField] private MobileInputModel mobileInputModel;
+    [SerializeField] private JustEffectManager justEffectManager;
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class PlayerManagerPresenter : MonoBehaviour
         playerManagerView.ChangeDamageState += playerManagerModel.ChangeDamageState;
         playerManagerView.ChangePlayerState += playerManagerModel.ChangePlayerState;
         playerManagerView.ReturnIsStressed += playerManagerModel.ReturnIsStressed;
+        playerManagerView.ChangeExactly += playerManagerModel.ChangeExactly;
 
         //Model → GameManagerModel
         playerManagerModel.GameOver += gameManagerModel.GameOver;
@@ -30,6 +33,13 @@ public class PlayerManagerPresenter : MonoBehaviour
 
         //View → SEManagerModel
         playerManagerView.SE_ChangeCloth += sEManagerModel.ChangeCloth;
+
+        //MobileInputModel → View
+        mobileInputModel.ChangeCloth += playerManagerView.ChangeCloth;
+
+        //Model → justEffectManager
+        playerManagerModel.StartJustTimer += justEffectManager.StartJustTimer;
+
     }
 
 }

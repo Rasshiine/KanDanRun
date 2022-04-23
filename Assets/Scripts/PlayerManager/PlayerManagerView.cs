@@ -15,6 +15,7 @@ public class PlayerManagerView : MonoBehaviour
     public event Action CheckOutsideAir;
     public event Action<bool?> ChangeDamageState;
     public event Action<bool> ChangePlayerState;
+    public event Action<bool, bool> ChangeExactly;
     //Func:Actionの戻り値ありバージョン
     public event Func<bool> ReturnIsStressed;
 
@@ -38,51 +39,42 @@ public class PlayerManagerView : MonoBehaviour
             CheckOutsideAir?.Invoke();
         }
         animator.SetBool(NameKeys.anim_isStressed, ReturnIsStressed());
+    }
 
-        bool? inp = null;
-        if (Input.GetKeyDown(KeyCode.UpArrow)) inp = false;
-        if (Input.GetKeyDown(KeyCode.DownArrow)) inp = true;
-        if (inp == null) return;
+    public void ChangeCloth(bool inp)
+    {
+        Debug.Log(inp);
 
-        ChangePlayerState?.Invoke((bool)inp);
-        animator.SetBool(NameKeys.anim_isPlayerWarm, (bool)inp);
+        ChangeExactly?.Invoke(true, inp);
+        ChangePlayerState?.Invoke(inp);
+        animator.SetBool(NameKeys.anim_isPlayerWarm, inp);
         SE_ChangeCloth?.Invoke();
     }
 
-    bool isStressed = false;
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (tag != NameKeys.House_FrontTag) return;
-    //    isStressed = ReturnIsStressed();
-    //}
+    #region Trigger
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SendChangeExactly(collision);
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     { 
-
         isInHouse = true;
         string tag = collision.gameObject.tag;
-        //Debug.Log("ReturnIsStressed = " + ReturnIsStressed());
-
-        //if (tag == NameKeys.invincibleTag && !ReturnIsStressed())
-        //{
-        //    ChangeDamageState.Invoke(null);
-        //    return;
-        //}
-
-        //if (tag == NameKeys.House_FrontTag && isStressed)
-        //{
-        //    ChangeDamageState.Invoke(null);
-        //    return;
-        //}
-        //if (tag == NameKeys.invincibleTag && !ReturnIsStressed()) Debug.Break();
         ChangeDamageState.Invoke(tag == NameKeys.warmTag);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-       // if (collision.gameObject.tag != NameKeys.House_BackTag) return;
+        SendChangeExactly(collision);
         isInHouse = false;
         ChangeDamageState.Invoke(null);
+    }
+    #endregion
+    void SendChangeExactly(Collider2D collision)
+    {
+        bool b = collision.gameObject.tag == NameKeys.warmTag;
+        ChangeExactly?.Invoke(false, b);
     }
 
     public void ShowPlayerHP(float hp)

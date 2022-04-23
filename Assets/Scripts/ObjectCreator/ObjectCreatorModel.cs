@@ -72,6 +72,8 @@ public class ObjectCreatorModel : MonoBehaviour
         //bar一本分右に移動
         bars[1].transform.position += Vector3.right * distance * objectileCount;
 
+
+
         defaultgroundPos = groundPos[1].position;
     }
     

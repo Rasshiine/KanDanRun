@@ -15,10 +15,7 @@ public class SEManagerModel : MonoBehaviour
     [SerializeField] private AudioClip damaged_Cold;
     [SerializeField] private AudioClip gameOver;
 
-    private void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
+    private void Awake() => audioSource = GetComponent<AudioSource>();
 
     public void StartButton() => audioSource.PlayOneShot(startButton);
     public void BackButton() => audioSource.PlayOneShot(backButton);
