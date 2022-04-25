@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 using Prime31.TransitionKit;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerView : MonoBehaviour
 {
@@ -15,6 +13,10 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private Button titleButton;
     [SerializeField] private Button rankingButton;
 
+    private Button[] openingButtons;
+    private Button[] endingButtons;
+    private float defaultPitch;
+
     [SerializeField] private Canvas valueCanvas;
 
     [SerializeField] Texture2D texture;
@@ -24,6 +26,7 @@ public class GameManagerView : MonoBehaviour
 
     public event Action StartScene;
     public event Func<int> GetScore;
+    public event Func<float> GetPitch;
 
     private void Awake()
     {
@@ -32,6 +35,11 @@ public class GameManagerView : MonoBehaviour
         howToPlayButton.onClick.AddListener(() => HowToPlayButton());
         titleButton.onClick.AddListener(() => ReloadScene());
         rankingButton.onClick.AddListener(() => RankingButton());
+
+        openingButtons = new Button[]
+        { startButton, creditButton, howToPlayButton };
+        endingButtons = new Button[]
+        { titleButton,rankingButton };
     }
 
     private void Start()
@@ -43,6 +51,22 @@ public class GameManagerView : MonoBehaviour
         howToPlayButton.gameObject.SetActive(true);
         titleButton.gameObject.SetActive(false);
         rankingButton.gameObject.SetActive(false);
+
+        defaultPitch = 60f / (160f * 2);
+        foreach (Button b in openingButtons)
+        {
+            BeatAnimation(b.gameObject, defaultPitch);
+        }
+    }
+
+    public void BeatAnimation(GameObject g, float pitch)
+    {
+
+        g.transform.DOScale(0.2f, pitch)
+            .SetRelative(true)
+            .SetEase(Ease.InQuart)
+            .SetLoops(-1, LoopType.Yoyo);
+        
     }
 
     void StartButton()
@@ -91,6 +115,8 @@ public class GameManagerView : MonoBehaviour
 
     public void ActivateUIs()
     {
+        foreach (Button b in endingButtons)
+            BeatAnimation(b.gameObject, defaultPitch / GetPitch());
         titleButton.gameObject.SetActive(true);
         rankingButton.gameObject.SetActive(true);
     }

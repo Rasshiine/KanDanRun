@@ -9,6 +9,7 @@ public class BGMManagerModel : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(inst);
         if (inst != null)
         {
             Destroy(gameObject);
@@ -21,4 +22,5 @@ public class BGMManagerModel : MonoBehaviour
     }
 
     public void IncreasePitch() => audioSource.pitch += 0.025f;
+    public float GetPitch() => audioSource.pitch;
 }

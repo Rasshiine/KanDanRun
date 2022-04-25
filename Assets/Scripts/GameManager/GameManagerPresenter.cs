@@ -32,5 +32,7 @@ public class GameManagerPresenter : MonoBehaviour
 
         //Model → BGMManagerModel
         gameManagerModel.IncreasePitch += bGMManagerModel.IncreasePitch;
+
+        gameManagerView.GetPitch += bGMManagerModel.GetPitch;
     }
 }

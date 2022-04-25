@@ -17,6 +17,8 @@ public class MobileInputModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             startPosY = mainCamera.ScreenToWorldPoint(Input.mousePosition).y;

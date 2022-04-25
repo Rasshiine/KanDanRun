@@ -15,7 +15,7 @@ public class GameManagerModel : MonoBehaviour
     private float playerSpeed = 0;
     private float probabilityOfChangeWeather = 1f;
 
-    private bool isOutsideWarm;
+    public static bool isOutsideWarm;
 
     public enum GameState
     {
@@ -92,5 +92,5 @@ public class GameManagerModel : MonoBehaviour
     }
 
     public int GetScore() => (int)score;
-
+    public bool GetIsOutsideWarm() => isOutsideWarm;
 }
