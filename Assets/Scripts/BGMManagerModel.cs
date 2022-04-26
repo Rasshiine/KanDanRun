@@ -6,6 +6,7 @@ public class BGMManagerModel : MonoBehaviour
 {
     private static BGMManagerModel inst;
     private AudioSource audioSource;
+    public static float bGMpitch = 1;
 
     private void Awake()
     {
@@ -19,8 +20,13 @@ public class BGMManagerModel : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         audioSource = GetComponent<AudioSource>();
         audioSource.pitch = 1;
+        bGMpitch = audioSource.pitch;
     }
 
-    public void IncreasePitch() => audioSource.pitch += 0.025f;
+    public void IncreasePitch()
+    {
+        audioSource.pitch += 0.025f;
+        bGMpitch = audioSource.pitch;
+    }
     public float GetPitch() => audioSource.pitch;
 }

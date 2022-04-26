@@ -17,7 +17,8 @@ public class PlayerManagerView : MonoBehaviour
     public event Action<bool> ChangePlayerState;
     public event Action<bool, bool> ChangeExactly;
     //Func:Actionの戻り値ありバージョン
-    public event Func<bool> ReturnIsStressed;
+    public event Func<bool> GetIsStressed;
+    public event Func<bool> GetIsPlayerWarm;
 
     public event Action SE_ChangeCloth;
 
@@ -38,13 +39,13 @@ public class PlayerManagerView : MonoBehaviour
         {
             CheckOutsideAir?.Invoke();
         }
-        animator.SetBool(NameKeys.anim_isStressed, ReturnIsStressed());
+        animator.SetBool(NameKeys.anim_isStressed, GetIsStressed());
     }
 
     public void ChangeCloth(bool inp)
     {
-        Debug.Log(inp);
-
+        if (GetIsPlayerWarm() == inp) return;
+        Debug.Log("kigaeta");
         ChangeExactly?.Invoke(true, inp);
         ChangePlayerState?.Invoke(inp);
         animator.SetBool(NameKeys.anim_isPlayerWarm, inp);

@@ -171,8 +171,8 @@ public class PlayerManagerModel : MonoBehaviour
         //Debug.Log("到達");
     }
 
-    public bool ReturnIsStressed()
-    {
-        return isStressed;
-    }
+    public bool GetIsStressed() => isStressed;
+    public bool GetisPlayerWarm() => isPlayerWarm;
+    
+    
 }

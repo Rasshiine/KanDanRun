@@ -22,7 +22,8 @@ public class PlayerManagerPresenter : MonoBehaviour
         playerManagerView.CheckOutsideAir += playerManagerModel.CheckOutsideAir;
         playerManagerView.ChangeDamageState += playerManagerModel.ChangeDamageState;
         playerManagerView.ChangePlayerState += playerManagerModel.ChangePlayerState;
-        playerManagerView.ReturnIsStressed += playerManagerModel.ReturnIsStressed;
+        playerManagerView.GetIsStressed += playerManagerModel.GetIsStressed;
+        playerManagerView.GetIsPlayerWarm += playerManagerModel.GetisPlayerWarm;
         playerManagerView.ChangeExactly += playerManagerModel.ChangeExactly;
 
         //Model → GameManagerModel

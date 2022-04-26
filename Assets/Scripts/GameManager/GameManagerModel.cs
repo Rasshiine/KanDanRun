@@ -31,6 +31,7 @@ public class GameManagerModel : MonoBehaviour
     public event Action<float> ChangeSpeed;
     public event Action ActivateUIs;
     public event Action ChangeWeather;
+    public event Action<float> ChangeBGColor;
     public event Action<bool> ChangeWeatherWithNoMotion;
     public event Action SE_StartButton;
     public event Action SE_ChangeWeather;
@@ -81,6 +82,7 @@ public class GameManagerModel : MonoBehaviour
                 isOutsideWarm = !isOutsideWarm;
                 ChangeOutSideAirState?.Invoke(isOutsideWarm);
                 ChangeWeather?.Invoke();
+                ChangeBGColor?.Invoke(1);
             }
         }
     }

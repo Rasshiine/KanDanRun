@@ -24,6 +24,7 @@ public class GameManagerPresenter : MonoBehaviour
 
         //Model → ObjectCreatorModel
         gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;
+        gameManagerModel.ChangeBGColor += objectCreatorModel.ChangeBGColor;
 
         //Model → SEManagerModel
         gameManagerModel.SE_StartButton += sEManagerModel.StartButton;
@@ -33,6 +34,8 @@ public class GameManagerPresenter : MonoBehaviour
         //Model → BGMManagerModel
         gameManagerModel.IncreasePitch += bGMManagerModel.IncreasePitch;
 
+        //View → BGMManagerModel
         gameManagerView.GetPitch += bGMManagerModel.GetPitch;
+
     }
 }

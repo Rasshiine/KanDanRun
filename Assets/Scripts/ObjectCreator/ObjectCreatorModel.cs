@@ -1,12 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class ObjectCreatorModel : MonoBehaviour
 {
     [SerializeField] private GameObject[] objects;
     [SerializeField] private Transform[] bg01Pos;
     [SerializeField] private Transform[] bg02Pos;
+    private SpriteRenderer[] bg02Image;
     [SerializeField] private Transform[] groundPos;
 
     [SerializeField] private GameObject[] clouds;
@@ -22,12 +26,32 @@ public class ObjectCreatorModel : MonoBehaviour
         bars = new GameObject[barCount];
         barDeadline = defaultBarPos.x - distance * objectileCount * 2;
         defaultBg02Pos = new Vector3(30, bg02Pos[0].position.y, 2);
+        bg02Image = new SpriteRenderer[2];
+        for (int i = 0; i < 2; i++)
+            bg02Image[i] = bg02Pos[i].gameObject.GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
         Create();
+        HouseBeatAnimation();
+        ChangeBGColor(0);
     }
+
+    private Tween[] houseBeatTween = new Tween[2];
+    float pitch = 1;
+    void HouseBeatAnimation()
+    {
+        Debug.Log(GameManagerView.DefaultPitch / BGMManagerModel.bGMpitch);
+        for(int i = 0; i < 2; i++)
+        {
+            houseBeatTween[i] = bg02Pos[i].DOScaleY(0.3f, GameManagerView.DefaultPitch)
+            .SetRelative(true)
+            .SetEase(Ease.InQuart)
+            .SetLoops(-1, LoopType.Yoyo);
+        }
+    }
+
 
     int currentBarNum = 0;
     int currentbg02Num = 0;
@@ -62,8 +86,8 @@ public class ObjectCreatorModel : MonoBehaviour
             for (int j = 0; j < objectileCount; j++)
             {
                 Instantiate(
-                    objects[Random.Range(0, objects.Length)],
-                    defaultBarPos + Vector3.right * (distance * j + Random.Range(-3f, 3f)),
+                    objects[UnityEngine.Random.Range(0, objects.Length)],
+                    defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-3f, 3f)),
                     Quaternion.identity)
                     .transform.parent
               = bars[i].transform;
@@ -88,16 +112,18 @@ public class ObjectCreatorModel : MonoBehaviour
             if (bg01Pos[i].position.x < bg01deadLine)
             {
                 Destroy(bg01Pos[i].gameObject);
-                float rand = Random.Range(0.0f, 1.0f);
+                float rand = UnityEngine.Random.Range(0.0f, 1.0f);
                 int tmp = 2;
                 if (rand < (1 - possibilityOfBoyCloud) / 2) tmp = 0;
                 else if(rand < (1 - possibilityOfBoyCloud)) tmp = 1;
                 GameObject g = Instantiate(clouds[tmp], Vector3.zero, Quaternion.identity);
                 bg01Pos[i] = g.transform;
                     
-                bg01Pos[i].position = new Vector3(-bg01deadLine, Random.Range(1f, 2f), 2);
+                bg01Pos[i].position = new Vector3(-bg01deadLine, UnityEngine.Random.Range(1f, 2f), 2);
             }
         }
+        for (int i = 0; i < 2; i++) 
+        houseBeatTween[i].timeScale = BGMManagerModel.bGMpitch;
 
         for (int i = 0; i < 2; i++)
         {
@@ -139,5 +165,14 @@ public class ObjectCreatorModel : MonoBehaviour
         moveDistanceVector = new Vector3(-speed, 0, 0);
     }
 
+    public void ChangeBGColor(float time)
+    {
+        Color c = GameManagerModel.isOutsideWarm ? Color.gray : Color.white;
+        for (int i = 0; i < 2; i++)
+        {
+            bg02Image[i].DOColor(c, time);
+        }
 
+    }
 }
+

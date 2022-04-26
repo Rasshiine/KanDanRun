@@ -15,7 +15,7 @@ public class GameManagerView : MonoBehaviour
 
     private Button[] openingButtons;
     private Button[] endingButtons;
-    private float defaultPitch;
+    public static readonly float DefaultPitch = 60f / (160f * 2);
 
     [SerializeField] private Canvas valueCanvas;
 
@@ -52,21 +52,18 @@ public class GameManagerView : MonoBehaviour
         titleButton.gameObject.SetActive(false);
         rankingButton.gameObject.SetActive(false);
 
-        defaultPitch = 60f / (160f * 2);
         foreach (Button b in openingButtons)
         {
-            BeatAnimation(b.gameObject, defaultPitch);
+            BeatAnimation(b.gameObject, DefaultPitch);
         }
     }
 
     public void BeatAnimation(GameObject g, float pitch)
     {
-
         g.transform.DOScale(0.2f, pitch)
             .SetRelative(true)
             .SetEase(Ease.InQuart)
             .SetLoops(-1, LoopType.Yoyo);
-        
     }
 
     void StartButton()
@@ -116,7 +113,7 @@ public class GameManagerView : MonoBehaviour
     public void ActivateUIs()
     {
         foreach (Button b in endingButtons)
-            BeatAnimation(b.gameObject, defaultPitch / GetPitch());
+            BeatAnimation(b.gameObject, DefaultPitch / GetPitch());
         titleButton.gameObject.SetActive(true);
         rankingButton.gameObject.SetActive(true);
     }
