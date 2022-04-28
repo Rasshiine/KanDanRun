@@ -133,10 +133,6 @@ public class PlayerManagerModel : MonoBehaviour
 
         if (isStressed && !isInvincible) return;
 
-        
-
-        Debug.Log((didChangedCloth ? "着替えた　" : "家　" )+ isExactlyTimerStarted);
-        //Debug.Break();
         if (!isExactlyTimerStarted)
         {
             isExactlyTimerStarted = true;
@@ -149,6 +145,7 @@ public class PlayerManagerModel : MonoBehaviour
         ClothChangedTheOneBefore = false;
         StartJustTimer?.Invoke();
         //playerHP += 0.05f;
+        //ゲージの増加
         DOTween.To(() => playerHP, (n) => playerHP = n, playerHP + 0.05f, 0.25f).SetUpdate(true);
         if (playerHP > 1) playerHP = 1;
     }

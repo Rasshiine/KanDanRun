@@ -11,6 +11,7 @@ public class PlayerManagerView : MonoBehaviour
     private bool isInHouse = false;
 
     private Animator animator;
+    [SerializeField] private Animator smokeAnimator;
 
     public event Action CheckOutsideAir;
     public event Action<bool?> ChangeDamageState;
@@ -48,7 +49,8 @@ public class PlayerManagerView : MonoBehaviour
         Debug.Log("kigaeta");
         ChangeExactly?.Invoke(true, inp);
         ChangePlayerState?.Invoke(inp);
-        animator.SetBool(NameKeys.anim_isPlayerWarm, inp);
+        smokeAnimator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger);
+        //animator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger) ;
         SE_ChangeCloth?.Invoke();
     }
 

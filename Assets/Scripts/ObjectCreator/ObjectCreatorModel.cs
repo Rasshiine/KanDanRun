@@ -42,7 +42,6 @@ public class ObjectCreatorModel : MonoBehaviour
     float pitch = 1;
     void HouseBeatAnimation()
     {
-        Debug.Log(GameManagerView.DefaultPitch / BGMManagerModel.bGMpitch);
         for(int i = 0; i < 2; i++)
         {
             houseBeatTween[i] = bg02Pos[i].DOScaleY(0.3f, GameManagerView.DefaultPitch)
