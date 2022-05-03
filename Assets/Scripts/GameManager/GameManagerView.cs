@@ -58,9 +58,10 @@ public class GameManagerView : MonoBehaviour
         }
     }
 
+    Tween beatTween;
     public void BeatAnimation(GameObject g, float pitch)
     {
-        g.transform.DOScale(0.2f, pitch)
+        beatTween = g.transform.DOScale(0.2f, pitch)
             .SetRelative(true)
             .SetEase(Ease.InQuart)
             .SetLoops(-1, LoopType.Yoyo);
@@ -69,8 +70,31 @@ public class GameManagerView : MonoBehaviour
     void StartButton()
     {
         valueCanvas.gameObject.SetActive(true);
-        startButton.gameObject.SetActive(false);
+        MoveButtons();
         StartScene?.Invoke();
+    }
+
+    void MoveButtons()
+    {
+        startButton.gameObject.GetComponent<RectTransform>();
+        //よくみたらOpeninguButtonsあったわ
+        RectTransform[] b = new RectTransform[]
+        {
+            startButton.gameObject.GetComponent<RectTransform>(),
+            creditButton.gameObject.GetComponent<RectTransform>(),
+            howToPlayButton.gameObject.GetComponent<RectTransform>()
+        };
+        //DOTween.Kill(beatTween);
+        beatTween.Kill();
+        
+        for(int i = 0; i < b.Length; i++)
+        {
+            b[i].DOScaleX(-0.2f, 0.2f).SetRelative(true);
+
+        }
+        //RectTransform transforms[]={
+        //    startButton.GetComponent
+        //}
     }
 
     void CreditButton()

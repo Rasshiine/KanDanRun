@@ -46,7 +46,6 @@ public class PlayerManagerView : MonoBehaviour
     public void ChangeCloth(bool inp)
     {
         if (GetIsPlayerWarm() == inp) return;
-        Debug.Log("kigaeta");
         ChangeExactly?.Invoke(true, inp);
         ChangePlayerState?.Invoke(inp);
         smokeAnimator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger);
