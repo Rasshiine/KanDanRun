@@ -28,6 +28,7 @@ public class PlayerManagerModel : MonoBehaviour
     public event Action GameOver;
     public event Action ChangeToGameOverAnimation;
     public event Action StartJustTimer;
+    public event Action PlayJustSound;
 
     //家の中にいる間
     public void ChangeDamageState(bool? isHouseWarm)
@@ -141,9 +142,9 @@ public class PlayerManagerModel : MonoBehaviour
 
         //CountExactlyTimer()でisExactlyTimerStartedを適宜falseにしているので、
         //↑が通るということはジャストなはず
-        Debug.Log("ジャスト！");
         ClothChangedTheOneBefore = false;
         StartJustTimer?.Invoke();
+        PlayJustSound?.Invoke();
         //playerHP += 0.05f;
         //ゲージの増加
         DOTween.To(() => playerHP, (n) => playerHP = n, playerHP + 0.05f, 0.25f).SetUpdate(true);
@@ -152,11 +153,6 @@ public class PlayerManagerModel : MonoBehaviour
 
     void CountExactlyTimer()
     {
-        isexact.text = "isExact: "+isExactlyTimerStarted.ToString();
-        isStressedText.text = "isStressed: "+isStressed.ToString();
-        isInvincibleText.text = "isInvincible: " + isInvincible.ToString();
-        
-
         if (!isExactlyTimerStarted) return;
         exactlyTimer += Time.deltaTime;
         if (exactlyTimer > limitOfExactlyTimer)

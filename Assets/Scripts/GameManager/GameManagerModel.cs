@@ -9,7 +9,7 @@ public class GameManagerModel : MonoBehaviour
     //public static bool isGamePlaying = false;
     private int level = 0;
     private float levelUpInterval = 100;
-    private float magnification = 0.2f;
+    private float magnification = 0.15f;
     private float score = 0;
     private float defaultPlayerSpeed = 5;
     private float playerSpeed = 0;
@@ -33,9 +33,9 @@ public class GameManagerModel : MonoBehaviour
     public event Action ChangeWeather;
     public event Action<float> ChangeBGColor;
     public event Action<bool> ChangeWeatherWithNoMotion;
-    public event Action SE_StartButton;
     public event Action SE_ChangeWeather;
     public event Action SE_LevelUp;
+    public event Action SE_GameOver;
     public event Action IncreasePitch;
 
     void Awake()
@@ -57,7 +57,6 @@ public class GameManagerModel : MonoBehaviour
     //ゲームスタートの処理
     public void StartScene()
     {
-        SE_StartButton?.Invoke();
         currentState = GameState.Playing;
     }
 
@@ -91,6 +90,7 @@ public class GameManagerModel : MonoBehaviour
     {
         currentState = GameState.Finished;
         ActivateUIs?.Invoke();
+        SE_GameOver?.Invoke();
     }
 
     public int GetScore() => (int)score;

@@ -3,18 +3,22 @@ using DG.Tweening;
 using Prime31.TransitionKit;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GameManagerView : MonoBehaviour
 {
+    [SerializeField] private RectTransform HPBar;
     [SerializeField] private Text scoreText;
     [SerializeField] private Button startButton;
     [SerializeField] private Button creditButton;
     [SerializeField] private Button howToPlayButton;
     [SerializeField] private Button titleButton;
     [SerializeField] private Button rankingButton;
+    
 
     private Button[] openingButtons;
     private Button[] endingButtons;
+    Tween[] beatTweens;
+
     public static readonly float DefaultPitch = 60f / (160f * 2);
 
     [SerializeField] private Canvas valueCanvas;
@@ -24,6 +28,7 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private Transform weatherTransform;
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
+    public event Action SE_StartButton;
     public event Action StartScene;
     public event Func<int> GetScore;
     public event Func<float> GetPitch;
@@ -40,6 +45,13 @@ public class GameManagerView : MonoBehaviour
         { startButton, creditButton, howToPlayButton };
         endingButtons = new Button[]
         { titleButton,rankingButton };
+
+
+        beatTweens = new Tween[openingButtons.Length];
+        for (int i = 0; i < beatTweens.Length; i++)
+        {
+            beatTweens[i] = BeatAnimation(openingButtons[i].gameObject, DefaultPitch);
+        }
     }
 
     private void Start()
@@ -52,16 +64,12 @@ public class GameManagerView : MonoBehaviour
         titleButton.gameObject.SetActive(false);
         rankingButton.gameObject.SetActive(false);
 
-        foreach (Button b in openingButtons)
-        {
-            BeatAnimation(b.gameObject, DefaultPitch);
-        }
+        
     }
 
-    Tween beatTween;
-    public void BeatAnimation(GameObject g, float pitch)
+    public Tween BeatAnimation(GameObject g, float pitch)
     {
-        beatTween = g.transform.DOScale(0.2f, pitch)
+        return g.transform.DOScale(0.2f, pitch)
             .SetRelative(true)
             .SetEase(Ease.InQuart)
             .SetLoops(-1, LoopType.Yoyo);
@@ -71,7 +79,14 @@ public class GameManagerView : MonoBehaviour
     {
         valueCanvas.gameObject.SetActive(true);
         MoveButtons();
+        SE_StartButton?.Invoke();
         StartScene?.Invoke();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) ReloadScene();
+        if (Input.GetKeyDown(KeyCode.Q)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void MoveButtons()
@@ -84,14 +99,31 @@ public class GameManagerView : MonoBehaviour
             creditButton.gameObject.GetComponent<RectTransform>(),
             howToPlayButton.gameObject.GetComponent<RectTransform>()
         };
-        //DOTween.Kill(beatTween);
-        beatTween.Kill();
-        
-        for(int i = 0; i < b.Length; i++)
-        {
-            b[i].DOScaleX(-0.2f, 0.2f).SetRelative(true);
+        for (int i = 0; i < beatTweens.Length; i++)
+            beatTweens[i].Kill();
 
+
+        for (int i = 0; i < b.Length; i++)
+        {
+            DOTween.Sequence()
+            .Join(b[i].DOMoveX(-100f, 0.2f).SetEase(Ease.OutExpo))
+
+            .Join(b[i].DOScaleX(-0.5f, 0.4f).SetEase(Ease.OutExpo))
+            .Join(b[i].DORotate(new Vector3(0, 0, -10), 0.2f))
+            //.AppendInterval(0.1f)
+            //.AppendCallback(() => Debug.Break())
+            .Append(b[i].DOMoveX(1200f, 0.3f).SetEase(Ease.InQuint))
+            .Join(b[i].DOScaleX(0.5f, 0.2f).SetEase(Ease.InExpo))
+            .Join(b[i].DORotate(new Vector3(0, 0, 10), 0.3f).SetEase(Ease.InOutCubic))
+            .SetRelative(true)
+            ;
         }
+
+        //HPBar.DOMove(new Vector2(-100, 100), 0.3f)
+        //    .From()
+        //    .SetEase()
+        //    .SetRelative(true);
+
         //RectTransform transforms[]={
         //    startButton.GetComponent
         //}
@@ -99,14 +131,16 @@ public class GameManagerView : MonoBehaviour
 
     void CreditButton()
     {
+        SE_StartButton?.Invoke();
 
     }
 
     void HowToPlayButton()
     {
+        SE_StartButton?.Invoke();
 
     }
-    
+
     public void ReloadScene()
     {
         var pixelater = new ImageMaskTransition()

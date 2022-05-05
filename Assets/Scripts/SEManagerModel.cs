@@ -11,6 +11,7 @@ public class SEManagerModel : MonoBehaviour
     [SerializeField] private AudioClip levelUp;
     [SerializeField] private AudioClip changeWeather;
     [SerializeField] private AudioClip changeCloth;
+    [SerializeField] private AudioClip just;
     [SerializeField] private AudioClip damaged_Hot;
     [SerializeField] private AudioClip damaged_Cold;
     [SerializeField] private AudioClip gameOver;
@@ -22,6 +23,7 @@ public class SEManagerModel : MonoBehaviour
     public void LevelUp() => audioSource.PlayOneShot(levelUp);
     public void ChangeWeather() => audioSource.PlayOneShot(changeWeather);
     public void ChangeCloth() => audioSource.PlayOneShot(changeCloth);
+    public void Just() => audioSource.PlayOneShot(just);
     public void Damaged_Hot() => audioSource.PlayOneShot(damaged_Hot);
     public void Damaged_Cold() => audioSource.PlayOneShot(damaged_Cold);
     public void GameOverSound() => audioSource.PlayOneShot(gameOver); 

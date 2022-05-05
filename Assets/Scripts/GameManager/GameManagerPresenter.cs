@@ -27,9 +27,12 @@ public class GameManagerPresenter : MonoBehaviour
         gameManagerModel.ChangeBGColor += objectCreatorModel.ChangeBGColor;
 
         //Model → SEManagerModel
-        gameManagerModel.SE_StartButton += sEManagerModel.StartButton;
         gameManagerModel.SE_ChangeWeather += sEManagerModel.ChangeWeather;
         gameManagerModel.SE_LevelUp += sEManagerModel.LevelUp;
+        gameManagerModel.SE_GameOver += sEManagerModel.GameOverSound;
+
+        //View → SEManagerModel
+        gameManagerView.SE_StartButton += sEManagerModel.StartButton;
 
         //Model → BGMManagerModel
         gameManagerModel.IncreasePitch += bGMManagerModel.IncreasePitch;

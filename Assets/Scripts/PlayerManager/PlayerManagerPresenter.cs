@@ -32,6 +32,9 @@ public class PlayerManagerPresenter : MonoBehaviour
         //GameManagerModel → Model
         gameManagerModel.ChangeOutSideAirState += playerManagerModel.ChangeOutSideAirState;
 
+        //Model → SEManagerModel
+        playerManagerModel.PlayJustSound += sEManagerModel.Just;
+
         //View → SEManagerModel
         playerManagerView.SE_ChangeCloth += sEManagerModel.ChangeCloth;
 

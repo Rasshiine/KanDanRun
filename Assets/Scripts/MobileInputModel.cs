@@ -6,6 +6,7 @@ using System;
 public class MobileInputModel : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private GameObject face;
 
     private float startPosY;
     private float currentPosY;
@@ -26,6 +27,7 @@ public class MobileInputModel : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
+            face.transform.position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             currentPosY = mainCamera.ScreenToWorldPoint(Input.mousePosition).y;
             if (Mathf.Abs(startPosY - currentPosY) < swipeDistance) return;
             ChangeCloth(startPosY > currentPosY);
