@@ -56,6 +56,7 @@ public class GameManagerView : MonoBehaviour
 
     private void Start()
     {
+
         valueCanvas.gameObject.SetActive(false);
 
         startButton.gameObject.SetActive(true);
