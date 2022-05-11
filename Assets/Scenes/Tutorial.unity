@@ -1312,7 +1312,6 @@ GameObject:
   - component: {fileID: 433521520}
   - component: {fileID: 433521526}
   - component: {fileID: 433521524}
-  - component: {fileID: 433521527}
   - component: {fileID: 433521528}
   - component: {fileID: 433521522}
   - component: {fileID: 433521521}
@@ -1408,7 +1407,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 65.9985
     y: 70
-    width: 77
+    width: 77.2997
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1436,11 +1435,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   version: 1
-  scrollPos: {x: 245.84746, y: -163.65118}
+  scrollPos: {x: 328.10254, y: 12.678071}
   variablesScrollPos: {x: 0, y: 0}
   variablesExpanded: 1
   blockViewHeight: 400
-  zoom: 1
+  zoom: 0.84250015
   scrollViewRect:
     serializedVersion: 2
     x: -343
@@ -1448,9 +1447,8 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 433521553}
-  selectedCommands:
-  - {fileID: 433521549}
+  - {fileID: 433521532}
+  selectedCommands: []
   variables: []
   description: 
   stepPause: 0
@@ -1651,7 +1649,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 49.998497
     y: 146
-    width: 117
+    width: 117.0623
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1661,7 +1659,6 @@ MonoBehaviour:
   eventHandler: {fileID: 433521526}
   commandList:
   - {fileID: 433521524}
-  - {fileID: 433521527}
   suppressAllAutoSelections: 0
 --- !u!114 &433521526
 MonoBehaviour:
@@ -1678,24 +1675,6 @@ MonoBehaviour:
   parentBlock: {fileID: 433521525}
   suppressBlockAutoSelect: 0
   message: EnteredColdHouse
---- !u!114 &433521527
-MonoBehaviour:
-  m_ObjectHideFlags: 2
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 433521513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fab8abf0343545abbfebd9a7b7b34bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemId: 10
-  indentLevel: 0
-  logType: 0
-  logMessage:
-    stringRef: {fileID: 0}
-    stringVal: bbbb
 --- !u!114 &433521528
 MonoBehaviour:
   m_ObjectHideFlags: 2
@@ -1710,9 +1689,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeRect:
     serializedVersion: 2
-    x: 47.202255
+    x: 46.015312
     y: 207.12323
-    width: 111
+    width: 111.12759
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -1830,7 +1809,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 36.748077
     y: 263.12323
-    width: 118
+    width: 118.249245
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2232,7 +2211,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 34.748077
     y: 320.12323
-    width: 119
+    width: 118.84272
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
@@ -2421,7 +2400,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 23.331726
     y: 376.65118
-    width: 119
+    width: 118.84272
     height: 40
   tint: {r: 1, g: 1, b: 1, a: 1}
   useCustomTint: 0
