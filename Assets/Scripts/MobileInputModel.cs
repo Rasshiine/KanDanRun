@@ -18,7 +18,14 @@ public class MobileInputModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
+        if (!TutorialManager.isTutorialMode &&
+            GameManagerModel.currentState != GameManagerModel.GameState.Playing) return;
+
+        if (TutorialManager.isTutorialMode &&
+            (TutorialManager.progress != 2
+            && TutorialManager.progress != 5
+            && TutorialManager.progress != 7)
+            && TutorialManager.progress != 9) return;
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -39,7 +46,7 @@ public class MobileInputModel : MonoBehaviour
             startPosY = 0;
             currentPosY = 0;
         }
-
+        
         bool? inp = null;
         if (Input.GetKeyDown(KeyCode.UpArrow)) inp = false;
         if (Input.GetKeyDown(KeyCode.DownArrow)) inp = true;

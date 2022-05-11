@@ -65,6 +65,9 @@ public class JustEffectManager : MonoBehaviour
 
     public void StartJustTimer()
     {
+        if (TutorialManager.isTutorialMode
+            && GameManagerModel.currentState == GameManagerModel.GameState.notStarted) return;
+
         PlayParticle();
         textTween.Restart();
         Time.timeScale = slomoMagnification;

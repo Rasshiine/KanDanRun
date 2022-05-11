@@ -56,7 +56,7 @@ public class GameManagerView : MonoBehaviour
 
     private void Start()
     {
-
+        if(!TutorialManager.isTutorialMode)
         valueCanvas.gameObject.SetActive(false);
 
         startButton.gameObject.SetActive(true);
@@ -119,15 +119,6 @@ public class GameManagerView : MonoBehaviour
             .SetRelative(true)
             ;
         }
-
-        //HPBar.DOMove(new Vector2(-100, 100), 0.3f)
-        //    .From()
-        //    .SetEase()
-        //    .SetRelative(true);
-
-        //RectTransform transforms[]={
-        //    startButton.GetComponent
-        //}
     }
 
     void CreditButton()
@@ -139,7 +130,6 @@ public class GameManagerView : MonoBehaviour
     void HowToPlayButton()
     {
         SE_StartButton?.Invoke();
-
     }
 
     public void ReloadScene()
@@ -166,7 +156,7 @@ public class GameManagerView : MonoBehaviour
 
     public void ShowScore(float score)
     {
-        scoreText.text = score.ToString("f0");
+        scoreText.text = score.ToString("f3");
     }
 
     public void ActivateUIs()

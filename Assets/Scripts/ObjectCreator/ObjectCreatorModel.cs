@@ -75,6 +75,7 @@ public class ObjectCreatorModel : MonoBehaviour
 
     void Create()
     {
+
         for(int i = 0; i < barCount; i++)
         {
             bars[i]=
@@ -104,6 +105,7 @@ public class ObjectCreatorModel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (TutorialManager.isTutorialMode && !TutorialManager.canBackGroundMove) return;
         //雲の移動
         for (int i = 0; i < bg01Pos.Length; i++)
         {
@@ -161,7 +163,7 @@ public class ObjectCreatorModel : MonoBehaviour
 
     public void ChangeSpeed(float speed)
     {
-        moveDistanceVector = new Vector3(-speed, 0, 0);
+        moveDistanceVector = new Vector3(-speed * 1000, 0, 0);
     }
 
     public void ChangeBGColor(float time)
@@ -172,6 +174,16 @@ public class ObjectCreatorModel : MonoBehaviour
             bg02Image[i].DOColor(c, time);
         }
 
+    }
+
+    public void ChangeHouseBeatStatus(bool b)
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            if (b) houseBeatTween[i].Play();
+            else houseBeatTween[i].Pause();
+        }
+            
     }
 }
 

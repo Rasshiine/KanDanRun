@@ -8,10 +8,10 @@ public class GameManagerModel : MonoBehaviour
 {
     //public static bool isGamePlaying = false;
     private int level = 0;
-    private float levelUpInterval = 100;
+    private float levelUpInterval = 0.1f;
     private float magnification = 0.15f;
     private float score = 0;
-    private float defaultPlayerSpeed = 5;
+    private float defaultPlayerSpeed = 0.005f;
     private float playerSpeed = 0;
     private float probabilityOfChangeWeather = 1f;
 
@@ -49,7 +49,7 @@ public class GameManagerModel : MonoBehaviour
         playerSpeed = defaultPlayerSpeed;
         ChangeSpeed?.Invoke(playerSpeed);
         //外気温を変化させる処理（ランダムか固定か）、背景変更の処理を書く
-        isOutsideWarm = UnityEngine.Random.Range(0, 2) == 0;
+        isOutsideWarm = TutorialManager.isTutorialMode ? true : UnityEngine.Random.Range(0, 2) == 0;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
         ChangeWeatherWithNoMotion?.Invoke(isOutsideWarm);
     }
@@ -78,14 +78,18 @@ public class GameManagerModel : MonoBehaviour
             IncreasePitch?.Invoke();
             if (UnityEngine.Random.Range(0.0f, 1.0f) < probabilityOfChangeWeather)
             {
-                isOutsideWarm = !isOutsideWarm;
-                ChangeOutSideAirState?.Invoke(isOutsideWarm);
-                ChangeWeather?.Invoke();
-                ChangeBGColor?.Invoke(1);
+                _ChangeWeather();
             }
         }
     }
 
+    public void _ChangeWeather()
+    {
+        isOutsideWarm = !isOutsideWarm;
+        ChangeOutSideAirState?.Invoke(isOutsideWarm);
+        ChangeWeather?.Invoke();
+        ChangeBGColor?.Invoke(1);
+    }
     public void GameOver()
     {
         currentState = GameState.Finished;

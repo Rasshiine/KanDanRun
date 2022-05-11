@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Fungus;
 
 public class PlayerManagerView : MonoBehaviour
 {
@@ -46,6 +47,18 @@ public class PlayerManagerView : MonoBehaviour
     public void ChangeCloth(bool inp)
     {
         if (GetIsPlayerWarm() == inp) return;
+        if (TutorialManager.isTutorialMode)
+        {
+            if (inp)
+            {
+                TutorialManager.SetProgress(3);
+                TutorialManager.SetProgress(8);
+            }
+                
+            else
+                TutorialManager.SetProgress(6);
+        }
+
         ChangeExactly?.Invoke(true, inp);
         ChangePlayerState?.Invoke(inp);
         smokeAnimator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger);
@@ -56,6 +69,7 @@ public class PlayerManagerView : MonoBehaviour
     #region Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (TutorialManager.isTutorialMode) TutorialManager.SetProgress(2);
         SendChangeExactly(collision);
     }
 
@@ -68,6 +82,7 @@ public class PlayerManagerView : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (TutorialManager.isTutorialMode) TutorialManager.SetProgress(4);
         SendChangeExactly(collision);
         isInHouse = false;
         ChangeDamageState.Invoke(null);
@@ -92,6 +107,11 @@ public class PlayerManagerView : MonoBehaviour
 
     public void ChangeToGameOverAnimation()
     {
-        animator.SetBool(NameKeys.anim_isGameOver, true);
+        animator.SetTrigger(NameKeys.anim_GameOverTrigger);
+    }
+
+    public void ChangeAnimationSpeed(float speed)
+    {
+        animator.speed = speed;
     }
 }

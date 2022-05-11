@@ -48,7 +48,7 @@ public class PlayerManagerModel : MonoBehaviour
     {
         isOutsideWarm = b;
         if (GameManagerModel.currentState != GameManagerModel.GameState.notStarted) return;
-
+        if (TutorialManager.isTutorialMode) return;
         //初期設定
         ChangePlayerState(!isOutsideWarm);
     }
@@ -66,7 +66,8 @@ public class PlayerManagerModel : MonoBehaviour
         {
             playerHP -= damageSpeed * Time.deltaTime;
             CancelInvoke(nameof(HealDamage));
-            if (playerHP <= 0)
+            
+            if (playerHP <= 0 && !TutorialManager.isTutorialMode)
             {
                 GameOver?.Invoke();
                 ChangeToGameOverAnimation?.Invoke();
@@ -113,11 +114,6 @@ public class PlayerManagerModel : MonoBehaviour
         invincibleTimer = 0;
     }
 
-
-    [SerializeField] Text isexact;
-    [SerializeField] Text isStressedText;
-    [SerializeField] Text isInvincibleText;
-
     //ストレスを受けていない && 外気と違う家に入る &&際に実行
     public void ChangeExactly(bool didChangedCloth, bool isWarm)
     {
@@ -144,11 +140,15 @@ public class PlayerManagerModel : MonoBehaviour
         //↑が通るということはジャストなはず
         ClothChangedTheOneBefore = false;
         StartJustTimer?.Invoke();
+
+        if (!TutorialManager.isTutorialMode || TutorialManager.progress == 9) 
         PlayJustSound?.Invoke();
         //playerHP += 0.05f;
         //ゲージの増加
         DOTween.To(() => playerHP, (n) => playerHP = n, playerHP + 0.05f, 0.25f).SetUpdate(true);
         if (playerHP > 1) playerHP = 1;
+
+        if (TutorialManager.isTutorialMode) TutorialManager.SetProgress(10);
     }
 
     void CountExactlyTimer()

@@ -10,10 +10,11 @@ public class NameKeys : MonoBehaviour
     public static readonly string House_BackTag = "House_Back";
 
     public static readonly string anim_isPlayerWarm = "isPlayerWarm";
-    public static readonly string anim_isGameOver = "isGameOver";
+    public static readonly string anim_GameOverTrigger = "GameOver";
     public static readonly string anim_isStressed = "isStressed";
 
     public static readonly string anim_beWarmTrigger = "beWarm";
     public static readonly string anim_beColdTrigger = "beCold";
 
+    public static readonly string tutorialScene = "Tutorial";
 }
