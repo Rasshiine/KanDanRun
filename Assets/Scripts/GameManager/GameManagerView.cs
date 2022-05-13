@@ -13,7 +13,8 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private Button howToPlayButton;
     [SerializeField] private Button titleButton;
     [SerializeField] private Button rankingButton;
-    
+    [SerializeField] private Button titleBackButton;
+    [SerializeField]
 
     private Button[] openingButtons;
     private Button[] endingButtons;
@@ -40,6 +41,7 @@ public class GameManagerView : MonoBehaviour
         howToPlayButton.onClick.AddListener(() => HowToPlayButton());
         titleButton.onClick.AddListener(() => ReloadScene());
         rankingButton.onClick.AddListener(() => RankingButton());
+        titleBackButton.onClick.AddListener(() => TitleBackButton());
 
         openingButtons = new Button[]
         { startButton, creditButton, howToPlayButton };
@@ -65,7 +67,7 @@ public class GameManagerView : MonoBehaviour
         titleButton.gameObject.SetActive(false);
         rankingButton.gameObject.SetActive(false);
 
-        
+        titleBackButton.gameObject.SetActive(SceneManager.GetActiveScene().name != NameKeys.mainScene);
     }
 
     public Tween BeatAnimation(GameObject g, float pitch)
@@ -130,6 +132,13 @@ public class GameManagerView : MonoBehaviour
     void HowToPlayButton()
     {
         SE_StartButton?.Invoke();
+        SceneLoader.inst.LoadScene(NameKeys.tutorialScene);
+    }
+
+    void TitleBackButton()
+    {
+        //canvasを作って中にボタン二つ入れる
+        
     }
 
     public void ReloadScene()

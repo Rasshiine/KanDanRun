@@ -16,5 +16,8 @@ public class NameKeys : MonoBehaviour
     public static readonly string anim_beWarmTrigger = "beWarm";
     public static readonly string anim_beColdTrigger = "beCold";
 
+    public static readonly string mainScene = "Main";
     public static readonly string tutorialScene = "Tutorial";
+
+    public static readonly string loadSceneCanvas = "LoadSceneCanvas";
 }
