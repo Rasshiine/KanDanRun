@@ -13,8 +13,10 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private Button howToPlayButton;
     [SerializeField] private Button titleButton;
     [SerializeField] private Button rankingButton;
+    [SerializeField] private Button pauseButton;
+    [SerializeField] private Canvas pauseCanvas;
     [SerializeField] private Button titleBackButton;
-    [SerializeField]
+    [SerializeField] private Button unPauseButton;
 
     private Button[] openingButtons;
     private Button[] endingButtons;
@@ -41,7 +43,9 @@ public class GameManagerView : MonoBehaviour
         howToPlayButton.onClick.AddListener(() => HowToPlayButton());
         titleButton.onClick.AddListener(() => ReloadScene());
         rankingButton.onClick.AddListener(() => RankingButton());
+        pauseButton.onClick.AddListener(() => PauseButton(true));
         titleBackButton.onClick.AddListener(() => TitleBackButton());
+        unPauseButton.onClick.AddListener(() => PauseButton(false));
 
         openingButtons = new Button[]
         { startButton, creditButton, howToPlayButton };
@@ -56,18 +60,75 @@ public class GameManagerView : MonoBehaviour
         }
     }
 
+    void StartButton()
+    {
+        valueCanvas.gameObject.SetActive(true);
+        pauseButton.gameObject.SetActive(true);
+        MoveButtons();
+        SE_StartButton?.Invoke();
+        StartScene?.Invoke();
+    }
+
+    void CreditButton()
+    {
+        SE_StartButton?.Invoke();
+
+    }
+
+    void HowToPlayButton()
+    {
+        SE_StartButton?.Invoke();
+        SceneLoader.inst.LoadScene(NameKeys.tutorialScene);
+    }
+
+    public void ReloadScene()
+    {
+        var pixelater = new ImageMaskTransition()
+        {
+            nextScene = 0,
+            maskTexture = texture,
+            backgroundColor = Color.green,
+            //backgroundColor = new Color(120, 241, 83),
+            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
+            duration = 0.3f,
+
+        };
+        TransitionKit.instance.transitionWithDelegate(pixelater);
+
+    }
+
+    void RankingButton()
+    {
+        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(GetScore());
+    }
+
+    void PauseButton(bool paused)
+    {
+        Time.timeScale = paused ? 0 : 1;
+        pauseCanvas. gameObject.SetActive(paused);
+    }
+
+    void TitleBackButton()
+    {
+        Time.timeScale = 1;
+        SceneLoader.inst.LoadScene(NameKeys.mainScene);
+    }
+
+    
     private void Start()
     {
         if(!TutorialManager.isTutorialMode)
         valueCanvas.gameObject.SetActive(false);
 
-        startButton.gameObject.SetActive(true);
-        creditButton.gameObject.SetActive(true);
-        howToPlayButton.gameObject.SetActive(true);
-        titleButton.gameObject.SetActive(false);
-        rankingButton.gameObject.SetActive(false);
+        //startButton.gameObject.SetActive(true);
+        //creditButton.gameObject.SetActive(true);
+        //howToPlayButton.gameObject.SetActive(true);
+        //titleButton.gameObject.SetActive(false);
+        //rankingButton.gameObject.SetActive(false);
+        //pauseButton.gameObject.SetActive(false);
+        //pauseCanvas.gameObject.SetActive(false);
 
-        titleBackButton.gameObject.SetActive(SceneManager.GetActiveScene().name != NameKeys.mainScene);
+//        titleBackButton.gameObject.SetActive(SceneManager.GetActiveScene().name != NameKeys.mainScene);
     }
 
     public Tween BeatAnimation(GameObject g, float pitch)
@@ -78,13 +139,6 @@ public class GameManagerView : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo);
     }
 
-    void StartButton()
-    {
-        valueCanvas.gameObject.SetActive(true);
-        MoveButtons();
-        SE_StartButton?.Invoke();
-        StartScene?.Invoke();
-    }
 
     private void Update()
     {
@@ -123,44 +177,11 @@ public class GameManagerView : MonoBehaviour
         }
     }
 
-    void CreditButton()
-    {
-        SE_StartButton?.Invoke();
 
-    }
 
-    void HowToPlayButton()
-    {
-        SE_StartButton?.Invoke();
-        SceneLoader.inst.LoadScene(NameKeys.tutorialScene);
-    }
+   
 
-    void TitleBackButton()
-    {
-        //canvasを作って中にボタン二つ入れる
-        
-    }
 
-    public void ReloadScene()
-    {
-        var pixelater = new ImageMaskTransition()
-        {
-            nextScene = 0,
-            maskTexture = texture,
-            backgroundColor = Color.green,
-            //backgroundColor = new Color(120, 241, 83),
-            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
-            duration = 0.3f,
-            
-        };
-        TransitionKit.instance.transitionWithDelegate(pixelater);
-
-    }
-
-    void RankingButton()
-    {
-        naichilab.RankingLoader.Instance.SendScoreAndShowRanking(GetScore());
-    }
 
 
     public void ShowScore(float score)

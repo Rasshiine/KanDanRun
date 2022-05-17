@@ -18,6 +18,7 @@ public class NameKeys : MonoBehaviour
 
     public static readonly string mainScene = "Main";
     public static readonly string tutorialScene = "Tutorial";
+    public static readonly string creditScene = "Credit";
 
     public static readonly string loadSceneCanvas = "LoadSceneCanvas";
 }
