@@ -163,7 +163,7 @@ public class ObjectCreatorModel : MonoBehaviour
 
     public void ChangeSpeed(float speed)
     {
-        moveDistanceVector = new Vector3(-speed * 1000, 0, 0);
+        moveDistanceVector = new Vector3(-speed, 0, 0);
     }
 
     public void ChangeBGColor(float time)

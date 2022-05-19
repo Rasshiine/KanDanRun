@@ -72,13 +72,15 @@ public class GameManagerView : MonoBehaviour
     void CreditButton()
     {
         SE_StartButton?.Invoke();
-
+        DOVirtual.DelayedCall
+            (0.5f, () => SceneLoader.inst.LoadScene(NameKeys.creditScene));
     }
 
     void HowToPlayButton()
     {
         SE_StartButton?.Invoke();
-        SceneLoader.inst.LoadScene(NameKeys.tutorialScene);
+        DOVirtual.DelayedCall
+            (0.5f, () => SceneLoader.inst.LoadScene(NameKeys.tutorialScene));
     }
 
     public void ReloadScene()
@@ -186,7 +188,7 @@ public class GameManagerView : MonoBehaviour
 
     public void ShowScore(float score)
     {
-        scoreText.text = score.ToString("f3");
+        scoreText.text = score.ToString("f0");
     }
 
     public void ActivateUIs()

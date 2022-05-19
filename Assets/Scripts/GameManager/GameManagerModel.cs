@@ -8,10 +8,10 @@ public class GameManagerModel : MonoBehaviour
 {
     //public static bool isGamePlaying = false;
     private int level = 0;
-    private float levelUpInterval = 0.1f;
+    private float levelUpInterval = 100f;
     private float magnification = 0.15f;
     private float score = 0;
-    private float defaultPlayerSpeed = 0.005f;
+    private float defaultPlayerSpeed = 5f;
     private float playerSpeed = 0;
     private float probabilityOfChangeWeather = 1f;
 
