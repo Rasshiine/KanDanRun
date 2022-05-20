@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class GameManagerView : MonoBehaviour
 {
+    [SerializeField] private Image title;
     [SerializeField] private RectTransform HPBar;
     [SerializeField] private Text scoreText;
     [SerializeField] private Button startButton;
@@ -32,6 +33,7 @@ public class GameManagerView : MonoBehaviour
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
     public event Action SE_StartButton;
+    public event Action SE_BackButton;
     public event Action StartScene;
     public event Func<int> GetScore;
     public event Func<float> GetPitch;
@@ -41,7 +43,7 @@ public class GameManagerView : MonoBehaviour
         startButton.onClick.AddListener(() => StartButton());
         creditButton.onClick.AddListener(() => CreditButton());
         howToPlayButton.onClick.AddListener(() => HowToPlayButton());
-        titleButton.onClick.AddListener(() => ReloadScene());
+        titleButton.onClick.AddListener(() => TitleBackButton());
         rankingButton.onClick.AddListener(() => RankingButton());
         pauseButton.onClick.AddListener(() => PauseButton(true));
         titleBackButton.onClick.AddListener(() => TitleBackButton());
@@ -64,6 +66,7 @@ public class GameManagerView : MonoBehaviour
     {
         valueCanvas.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
+        title.DOFade(0, 0.2f);
         MoveButtons();
         SE_StartButton?.Invoke();
         StartScene?.Invoke();
@@ -72,31 +75,13 @@ public class GameManagerView : MonoBehaviour
     void CreditButton()
     {
         SE_StartButton?.Invoke();
-        DOVirtual.DelayedCall
-            (0.5f, () => SceneLoader.inst.LoadScene(NameKeys.creditScene));
+        SceneLoader.inst.LoadScene(NameKeys.creditScene);
     }
 
     void HowToPlayButton()
     {
         SE_StartButton?.Invoke();
-        DOVirtual.DelayedCall
-            (0.5f, () => SceneLoader.inst.LoadScene(NameKeys.tutorialScene));
-    }
-
-    public void ReloadScene()
-    {
-        var pixelater = new ImageMaskTransition()
-        {
-            nextScene = 0,
-            maskTexture = texture,
-            backgroundColor = Color.green,
-            //backgroundColor = new Color(120, 241, 83),
-            //finalScaleEffect = PixelateTransition.PixelateFinalScaleEffect.ToPoint,
-            duration = 0.3f,
-
-        };
-        TransitionKit.instance.transitionWithDelegate(pixelater);
-
+        SceneLoader.inst.LoadScene(NameKeys.tutorialScene);
     }
 
     void RankingButton()
@@ -106,12 +91,16 @@ public class GameManagerView : MonoBehaviour
 
     void PauseButton(bool paused)
     {
+        if (paused) SE_StartButton?.Invoke();
+        else SE_BackButton?.Invoke();
         Time.timeScale = paused ? 0 : 1;
-        pauseCanvas. gameObject.SetActive(paused);
+        pauseCanvas.gameObject.SetActive(paused);
     }
 
     void TitleBackButton()
     {
+        SE_StartButton?.Invoke();
+
         Time.timeScale = 1;
         SceneLoader.inst.LoadScene(NameKeys.mainScene);
     }
@@ -141,13 +130,6 @@ public class GameManagerView : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo);
     }
 
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R)) ReloadScene();
-        if (Input.GetKeyDown(KeyCode.Q)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
     void MoveButtons()
     {
         startButton.gameObject.GetComponent<RectTransform>();
@@ -174,17 +156,9 @@ public class GameManagerView : MonoBehaviour
             .Append(b[i].DOMoveX(1200f, 0.3f).SetEase(Ease.InQuint))
             .Join(b[i].DOScaleX(0.5f, 0.2f).SetEase(Ease.InExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, 10), 0.3f).SetEase(Ease.InOutCubic))
-            .SetRelative(true)
-            ;
+            .SetRelative(true);
         }
     }
-
-
-
-   
-
-
-
 
     public void ShowScore(float score)
     {

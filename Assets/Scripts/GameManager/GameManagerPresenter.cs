@@ -33,6 +33,7 @@ public class GameManagerPresenter : MonoBehaviour
 
         //View → SEManagerModel
         gameManagerView.SE_StartButton += sEManagerModel.StartButton;
+        gameManagerView.SE_BackButton += sEManagerModel.BackButton;
 
         //Model → BGMManagerModel
         gameManagerModel.IncreasePitch += bGMManagerModel.IncreasePitch;

@@ -10,8 +10,8 @@ public class SceneLoader : MonoBehaviour
 
     [SerializeField] private GameObject facePrefab;
     private GameObject face;
-    private float maxSize = 15;
-    private float time = 0.5f;
+    private float maxSize = 30;
+    private float time = 1f;
 
     private void Awake()
     {
@@ -31,8 +31,7 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        face.transform.DOScale(maxSize, time);
-        DOVirtual.DelayedCall(time, () => SceneManager.LoadScene(sceneName));
-       
+        face.transform.DOScale(maxSize, time)
+            .OnComplete(() => SceneManager.LoadScene(sceneName));
     }
 }

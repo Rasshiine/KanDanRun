@@ -79,6 +79,8 @@ public class PlayerManagerModel : MonoBehaviour
         }
 
         ShowHP?.Invoke(playerHP);
+
+        Debug.Assert(!isInvincible);
     }
 
     void HealDamage()

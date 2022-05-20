@@ -7,7 +7,7 @@ public class CreditManager : MonoBehaviour
 {
     [SerializeField] private Transform bar;
 
-    private float distanse = -100f;
+    private float distanse = -95f;
     private float time = 20f;
     private float waitingTime = 5f;
 
