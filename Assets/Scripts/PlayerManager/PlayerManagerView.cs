@@ -62,7 +62,6 @@ public class PlayerManagerView : MonoBehaviour
         ChangeExactly?.Invoke(true, inp);
         ChangePlayerState?.Invoke(inp);
         smokeAnimator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger);
-        //animator.SetTrigger(inp ? NameKeys.anim_beWarmTrigger : NameKeys.anim_beColdTrigger) ;
         SE_ChangeCloth?.Invoke();
     }
 

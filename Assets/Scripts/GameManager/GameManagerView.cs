@@ -66,7 +66,9 @@ public class GameManagerView : MonoBehaviour
     {
         valueCanvas.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
-        title.DOFade(0, 0.2f);
+        title.DOFade(0, 0.2f)
+            .OnComplete(() => title.gameObject.SetActive(false));
+        
         MoveButtons();
         SE_StartButton?.Invoke();
         StartScene?.Invoke();
@@ -110,16 +112,6 @@ public class GameManagerView : MonoBehaviour
     {
         if(!TutorialManager.isTutorialMode)
         valueCanvas.gameObject.SetActive(false);
-
-        //startButton.gameObject.SetActive(true);
-        //creditButton.gameObject.SetActive(true);
-        //howToPlayButton.gameObject.SetActive(true);
-        //titleButton.gameObject.SetActive(false);
-        //rankingButton.gameObject.SetActive(false);
-        //pauseButton.gameObject.SetActive(false);
-        //pauseCanvas.gameObject.SetActive(false);
-
-//        titleBackButton.gameObject.SetActive(SceneManager.GetActiveScene().name != NameKeys.mainScene);
     }
 
     public Tween BeatAnimation(GameObject g, float pitch)
@@ -151,8 +143,6 @@ public class GameManagerView : MonoBehaviour
 
             .Join(b[i].DOScaleX(-0.5f, 0.4f).SetEase(Ease.OutExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, -10), 0.2f))
-            //.AppendInterval(0.1f)
-            //.AppendCallback(() => Debug.Break())
             .Append(b[i].DOMoveX(1200f, 0.3f).SetEase(Ease.InQuint))
             .Join(b[i].DOScaleX(0.5f, 0.2f).SetEase(Ease.InExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, 10), 0.3f).SetEase(Ease.InOutCubic))

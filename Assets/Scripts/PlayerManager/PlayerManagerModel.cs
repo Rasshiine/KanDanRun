@@ -62,7 +62,7 @@ public class PlayerManagerModel : MonoBehaviour
 
         CountExactlyTimer();
         
-        if (isStressed)
+        if (isStressed && !isInvincible)
         {
             playerHP -= damageSpeed * Time.deltaTime;
             CancelInvoke(nameof(HealDamage));
@@ -80,8 +80,12 @@ public class PlayerManagerModel : MonoBehaviour
 
         ShowHP?.Invoke(playerHP);
 
-        Debug.Assert(!isInvincible);
+        invText.text = isInvincible.ToString();
+
+        
     }
+    [SerializeField] Text invText;
+
 
     void HealDamage()
     {
@@ -101,7 +105,7 @@ public class PlayerManagerModel : MonoBehaviour
 
     public void ChangePlayerState(bool isWarm)
     {
-        ResetInvincible();
+        //ResetInvincible();
         if (isPlayerWarm == isWarm) return;
         isPlayerWarm = isWarm;
         ChangeAnimation?.Invoke(isPlayerWarm);

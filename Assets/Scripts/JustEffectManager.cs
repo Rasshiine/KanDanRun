@@ -30,6 +30,9 @@ public class JustEffectManager : MonoBehaviour
 
     public event Action HealHP;
 
+    private Tween textTween;
+
+
     private void Awake()
     {
         textTween = DOTween.Sequence()
@@ -84,15 +87,5 @@ public class JustEffectManager : MonoBehaviour
         Sprite spr = GameManagerModel.isOutsideWarm ? flower : star;
         justParticle.textureSheetAnimation.SetSprite(0, spr);
         justParticle.Play();
-    }
-
-
-    Tween textTween;
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartJustTimer();
-        }
     }
 }
