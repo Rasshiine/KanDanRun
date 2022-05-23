@@ -1538,9 +1538,9 @@ MonoBehaviour:
     width: 1114
     height: 859
   selectedBlocks:
-  - {fileID: 433521553}
+  - {fileID: 433521547}
   selectedCommands:
-  - {fileID: 433521549}
+  - {fileID: 433521544}
   variables: []
   description: 
   stepPause: 0
@@ -1713,7 +1713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 9
   indentLevel: 0
-  storyText: "\u305D\u3053\u306E\u541B\uFF01\u305D\u306E\u753B\u9762\u3092\u4E0B\u306B\u30B9\u30EF\u30A4\u30D7\n\u3057\u3066\u307F\u3066\uFF01"
+  storyText: "\u305D\u3053\u306E\u541B\uFF01\u30AD\u30FC\u30DC\u30FC\u30C9\u306E\u4E0B\u77E2\u5370\u30AD\u30FC(\u2193)\u3092\n\u62BC\u3057\u3066\u307F\u3066\uFF01"
   description: 
   character: {fileID: 1260142686}
   portrait: {fileID: 21300000, guid: 7329efd3d21ed4991b29b8cd1e773566, type: 3}
@@ -1796,8 +1796,8 @@ MonoBehaviour:
   - {fileID: 433521521}
   - {fileID: 433521535}
   - {fileID: 433521534}
-  - {fileID: 433521533}
   - {fileID: 433521550}
+  - {fileID: 433521533}
   suppressAllAutoSelections: 0
 --- !u!114 &433521529
 MonoBehaviour:
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 16
   indentLevel: 0
-  storyText: "\u4ECA\u5EA6\u306F\u753B\u9762\u3092\u4E0A\u306B\u30B9\u30EF\u30A4\u30D7\u3057\u3066\u307F\u3066\uFF01"
+  storyText: "\u4ECA\u5EA6\u306F\u4E0A\u77E2\u5370\u30AD\u30FC(\u2191)\u3092\u62BC\u3057\u3066\u307F\u3066\uFF01"
   description: 
   character: {fileID: 1260142686}
   portrait: {fileID: 21300000, guid: 886e87552785f438eafc68f5c4f5f197, type: 3}
@@ -2233,7 +2233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 29
   indentLevel: 0
-  storyText: "\u6700\u5F8C\u306B\u3001\u5916\u3068\u5BB6\u306E\u3055\u304B\u3044\u3081\u3067\n\u3074\u3063\u305F\u308A\u7740\u66FF\u3048\u3066\u307F\u3066\uFF01"
+  storyText: "\u6700\u5F8C\u306B\u3001\u5916\u3068\u5BB6\u3068\u306E\u3055\u304B\u3044\u3081\u3067\n\u3074\u3063\u305F\u308A\u7740\u66FF\u3048\u3066\u307F\u3066\uFF01"
   description: 
   character: {fileID: 1260142686}
   portrait: {fileID: 21300000, guid: 886e87552785f438eafc68f5c4f5f197, type: 3}
@@ -4217,7 +4217,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6733688149706276775, guid: e9cd24dd6f43c487e95add17cd0755e6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: -1.47
       objectReference: {fileID: 0}
     - target: {fileID: 6733688149706276775, guid: e9cd24dd6f43c487e95add17cd0755e6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -11861,6 +11861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca2c779af1ee430686ac6001ed9ba34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invText: {fileID: 0}
 --- !u!114 &2052745502
 MonoBehaviour:
   m_ObjectHideFlags: 0

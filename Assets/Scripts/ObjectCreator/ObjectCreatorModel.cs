@@ -59,7 +59,7 @@ public class ObjectCreatorModel : MonoBehaviour
     float distance = 10;
 
     float barDeadline;
-    private Vector3 defaultBarPos = new Vector3(25, -1, 1);
+    private Vector3 defaultBarPos = new Vector3(25, 0, 1);
 
     float bg01deadLine = -20;
     //下の二つは微妙に位置調整した実質マジックナンバー
@@ -85,9 +85,11 @@ public class ObjectCreatorModel : MonoBehaviour
                   Quaternion.identity);
             for (int j = 0; j < objectileCount; j++)
             {
+                GameObject g = objects[UnityEngine.Random.Range(0, objects.Length)];
                 Instantiate(
-                    objects[UnityEngine.Random.Range(0, objects.Length)],
-                    defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-3f, 3f)),
+                    g,
+                    defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-2f, 2f))
+                    + g.transform.position,
                     Quaternion.identity)
                     .transform.parent
               = bars[i].transform;
