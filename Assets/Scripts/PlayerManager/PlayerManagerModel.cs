@@ -79,13 +79,7 @@ public class PlayerManagerModel : MonoBehaviour
         }
 
         ShowHP?.Invoke(playerHP);
-
-        invText.text = isInvincible.ToString();
-
-        
     }
-    [SerializeField] Text invText;
-
 
     void HealDamage()
     {

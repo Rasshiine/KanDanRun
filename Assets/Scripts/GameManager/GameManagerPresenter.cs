@@ -17,10 +17,13 @@ public class GameManagerPresenter : MonoBehaviour
         gameManagerModel.ActivateUIs += gameManagerView.ActivateUIs;
         gameManagerModel.ChangeWeather += gameManagerView.ChangeWeather;
         gameManagerModel.ChangeWeatherWithNoMotion += gameManagerView.ChangeWeatherWithNoMotion;
+        gameManagerModel.GameStart += gameManagerView.StartButton;
+        gameManagerModel.StartBlinking += gameManagerView.StartBlinking;
 
         //View → Model
         gameManagerView.StartScene += gameManagerModel.StartScene;
         gameManagerView.GetScore += gameManagerModel.GetScore;
+        gameManagerView._ChangeWeather += gameManagerModel._ChangeWeather;
 
         //Model → ObjectCreatorModel
         gameManagerModel.ChangeSpeed += objectCreatorModel.ChangeSpeed;

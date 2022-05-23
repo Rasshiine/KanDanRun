@@ -18,6 +18,7 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private Canvas pauseCanvas;
     [SerializeField] private Button titleBackButton;
     [SerializeField] private Button unPauseButton;
+    [SerializeField] private Button retryButton;
 
     private Button[] openingButtons;
     private Button[] endingButtons;
@@ -30,6 +31,7 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] Texture2D texture;
 
     [SerializeField] private Transform weatherTransform;
+    [SerializeField] private SpriteRenderer weatherSpr;
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
     public event Action SE_StartButton;
@@ -37,6 +39,7 @@ public class GameManagerView : MonoBehaviour
     public event Action StartScene;
     public event Func<int> GetScore;
     public event Func<float> GetPitch;
+    public event Action _ChangeWeather;
 
     private void Awake()
     {
@@ -48,6 +51,7 @@ public class GameManagerView : MonoBehaviour
         pauseButton.onClick.AddListener(() => PauseButton(true));
         titleBackButton.onClick.AddListener(() => TitleBackButton());
         unPauseButton.onClick.AddListener(() => PauseButton(false));
+        retryButton.onClick.AddListener(() => RetryButton());
 
         openingButtons = new Button[]
         { startButton, creditButton, howToPlayButton };
@@ -62,13 +66,21 @@ public class GameManagerView : MonoBehaviour
         }
     }
 
-    void StartButton()
+    public void StartButton()
     {
         valueCanvas.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(true);
         title.DOFade(0, 0.2f)
             .OnComplete(() => title.gameObject.SetActive(false));
-        
+
+        if (GameManagerModel.wasRetryButtonPressed)
+        {
+            startButton.gameObject.SetActive(false);
+            howToPlayButton.gameObject.SetActive(false);
+            creditButton.gameObject.SetActive(false);
+            GameManagerModel.wasRetryButtonPressed = false;
+            return;
+        }
         MoveButtons();
         SE_StartButton?.Invoke();
         StartScene?.Invoke();
@@ -107,11 +119,17 @@ public class GameManagerView : MonoBehaviour
         SceneLoader.inst.LoadScene(NameKeys.mainScene);
     }
 
+    void RetryButton()
+    {
+        GameManagerModel.wasRetryButtonPressed = true;
+        TitleBackButton();
+    }
+
     
     private void Start()
     {
-        if(!TutorialManager.isTutorialMode)
-        valueCanvas.gameObject.SetActive(false);
+        if (!TutorialManager.isTutorialMode)
+            valueCanvas.gameObject.SetActive(false);
     }
 
     public Tween BeatAnimation(GameObject g, float pitch)
@@ -161,13 +179,29 @@ public class GameManagerView : MonoBehaviour
             BeatAnimation(b.gameObject, DefaultPitch / GetPitch());
         titleButton.gameObject.SetActive(true);
         rankingButton.gameObject.SetActive(true);
+        retryButton.gameObject.SetActive(true);
     }
 
     public void ChangeWeather()
     {
-        weatherTransform.DOLocalRotate(rotateVector, 1f)
-            .SetEase(Ease.InOutBack)
-            .SetRelative(true);
+        
+
+       
+    }
+
+    public void StartBlinking()
+    {
+        Debug.Log("oj");
+        weatherSpr.DOFade(0.3f, 0.2f)
+            .SetLoops(6, LoopType.Yoyo)
+            .OnComplete(() =>
+            {
+                weatherTransform.DOLocalRotate(rotateVector, 1f)
+                .SetEase(Ease.InOutBack)
+                .SetRelative(true);
+
+                _ChangeWeather?.Invoke();
+            });
     }
 
     public void ChangeWeatherWithNoMotion(bool isWarm)

@@ -9,13 +9,16 @@ public class GameManagerModel : MonoBehaviour
     //public static bool isGamePlaying = false;
     private int level = 0;
     private float levelUpInterval = 100f;
-    private float magnification = 0.15f;
+    private float magnification = 0.2f;
     private float score = 0;
     private float defaultPlayerSpeed = 5f;
-    private float playerSpeed = 0;
+    [SerializeField]private float playerSpeed = 0;
+    private float maxSpeedMagnification = 2;
     private float probabilityOfChangeWeather = 1f;
 
     public static bool isOutsideWarm;
+
+    public static bool wasRetryButtonPressed = false;
 
     public enum GameState
     {
@@ -37,6 +40,8 @@ public class GameManagerModel : MonoBehaviour
     public event Action SE_LevelUp;
     public event Action SE_GameOver;
     public event Action IncreasePitch;
+    public event Action GameStart;
+    public event Action StartBlinking;
 
     void Awake()
     {
@@ -52,6 +57,12 @@ public class GameManagerModel : MonoBehaviour
         isOutsideWarm = TutorialManager.isTutorialMode ? true : UnityEngine.Random.Range(0, 2) == 0;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
         ChangeWeatherWithNoMotion?.Invoke(isOutsideWarm);
+
+        if (wasRetryButtonPressed)
+        {
+            currentState = GameState.Playing;
+            GameStart?.Invoke();
+        }
     }
 
     //ゲームスタートの処理
@@ -73,21 +84,28 @@ public class GameManagerModel : MonoBehaviour
         if (score > levelUpInterval * (level + 1))
         {
             level++;
-            playerSpeed = defaultPlayerSpeed * (1 + magnification * level);
-            ChangeSpeed?.Invoke(playerSpeed);
-            IncreasePitch?.Invoke();
             if (UnityEngine.Random.Range(0.0f, 1.0f) < probabilityOfChangeWeather)
             {
-                _ChangeWeather();
+                StartBlinking?.Invoke();
             }
+            if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
+            playerSpeed += Magnification();
+            ChangeSpeed?.Invoke(playerSpeed);
+            IncreasePitch?.Invoke();
+            
         }
+    }
+
+    float Magnification()
+    {
+        return magnification / Mathf.Sqrt(level);
     }
 
     public void _ChangeWeather()
     {
         isOutsideWarm = !isOutsideWarm;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
-        ChangeWeather?.Invoke();
+        //ChangeWeather?.Invoke();
         ChangeBGColor?.Invoke(1);
     }
     public void GameOver()

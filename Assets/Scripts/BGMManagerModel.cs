@@ -10,16 +10,6 @@ public class BGMManagerModel : MonoBehaviour
 
     private void Awake()
     {
-        //Debug.Log(inst);
-        //if (inst != null)
-        //{
-        //    Destroy(gameObject);
-        //    return;
-        //}
-        //inst = this;
-        //Debug.Log(inst);
-
-        //DontDestroyOnLoad(inst);
         audioSource = GetComponent<AudioSource>();
         audioSource.pitch = 1;
         bGMpitch = audioSource.pitch;
@@ -28,7 +18,6 @@ public class BGMManagerModel : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        //Debug.Log("call");
     }
 
     public void IncreasePitch()
