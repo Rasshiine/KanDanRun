@@ -9,7 +9,7 @@ public class GameManagerModel : MonoBehaviour
     //public static bool isGamePlaying = false;
     private int level = 0;
     private float levelUpInterval = 100f;
-    private float magnification = 0.2f;
+    private float magnification = 2f;
     private float score = 0;
     private float defaultPlayerSpeed = 5f;
     [SerializeField]private float playerSpeed = 0;
@@ -88,8 +88,9 @@ public class GameManagerModel : MonoBehaviour
             {
                 StartBlinking?.Invoke();
             }
-            if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
+            //if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
             playerSpeed += Magnification();
+            Debug.Log(playerSpeed);
             ChangeSpeed?.Invoke(playerSpeed);
             IncreasePitch?.Invoke();
             

@@ -161,7 +161,7 @@ public class GameManagerView : MonoBehaviour
 
             .Join(b[i].DOScaleX(-0.5f, 0.4f).SetEase(Ease.OutExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, -10), 0.2f))
-            .Append(b[i].DOMoveX(1200f, 0.3f).SetEase(Ease.InQuint))
+            .Append(b[i].DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InQuint).SetRelative(false))
             .Join(b[i].DOScaleX(0.5f, 0.2f).SetEase(Ease.InExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, 10), 0.3f).SetEase(Ease.InOutCubic))
             .SetRelative(true);
@@ -191,7 +191,6 @@ public class GameManagerView : MonoBehaviour
 
     public void StartBlinking()
     {
-        Debug.Log("oj");
         weatherSpr.DOFade(0.3f, 0.2f)
             .SetLoops(6, LoopType.Yoyo)
             .OnComplete(() =>
