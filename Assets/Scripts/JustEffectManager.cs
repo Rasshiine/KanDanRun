@@ -51,7 +51,6 @@ public class JustEffectManager : MonoBehaviour
 
         //Scale
         .Join(justText.gameObject.transform.DOScale(1.2f, effectTime * 2)
-        //.Join(justText.gameObject.transform.DOMoveY(0.2f, effectTime * 2)
         .SetEase(Ease.InBack).SetRelative())
 
         .Append(justText.DOFade(0, effectTime))

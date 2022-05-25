@@ -9,11 +9,11 @@ public class GameManagerModel : MonoBehaviour
     //public static bool isGamePlaying = false;
     private int level = 0;
     private float levelUpInterval = 100f;
-    private float magnification = 2f;
+    private float magnification = 1f;
     private float score = 0;
     private float defaultPlayerSpeed = 5f;
     [SerializeField]private float playerSpeed = 0;
-    private float maxSpeedMagnification = 2;
+    private float maxSpeedMagnification = 4;
     private float probabilityOfChangeWeather = 1f;
 
     public static bool isOutsideWarm;
@@ -71,6 +71,7 @@ public class GameManagerModel : MonoBehaviour
         currentState = GameState.Playing;
     }
 
+    float nextInterval = 100;
     // Update is called once per frame
     void Update()
     {
@@ -81,25 +82,24 @@ public class GameManagerModel : MonoBehaviour
         ShowScore?.Invoke(score);
 
         //レベル上昇
-        if (score > levelUpInterval * (level + 1))
-        {
-            level++;
-            if (UnityEngine.Random.Range(0.0f, 1.0f) < probabilityOfChangeWeather)
-            {
-                StartBlinking?.Invoke();
-            }
-            //if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
-            playerSpeed += Magnification();
-            Debug.Log(playerSpeed);
-            ChangeSpeed?.Invoke(playerSpeed);
-            IncreasePitch?.Invoke();
-            
-        }
+        if (score <= nextInterval) return;
+
+        level++;
+        nextInterval = levelUpInterval * (level + 1) * (1 + (float)level / 10) /** UnityEngine.Random.Range(0.8f, 1.2f)*/;
+        StartBlinking?.Invoke();
+
+        if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
+        playerSpeed += Magnification();
+        Debug.Log(playerSpeed);
+        ChangeSpeed?.Invoke(playerSpeed);
+        IncreasePitch?.Invoke();
     }
 
     float Magnification()
     {
-        return magnification / Mathf.Sqrt(level);
+        //float s = defaultPlayerSpeed * maxSpeedMagnification;
+        //if (playerSpeed > s) return s;
+        return magnification * (level > 10 ? 0.3f : 1f);
     }
 
     public void _ChangeWeather()
