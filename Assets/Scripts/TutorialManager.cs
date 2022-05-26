@@ -94,6 +94,8 @@ public class TutorialManager : MonoBehaviour
 
         GameManagerModel.currentState = GameManagerModel.GameState.Playing;
         while (progress == 9) yield return null;
+
+        ChangeTimeStatus(false);
         flowchart.SendFungusMessage("CloseChanged4");
     }
 
