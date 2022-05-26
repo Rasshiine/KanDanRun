@@ -86,6 +86,7 @@ public class PlayerManagerView : MonoBehaviour
         ChangeDamageState.Invoke(null);
     }
     #endregion
+    
     void SendChangeExactly(Collider2D collision)
     {
         bool b = collision.gameObject.tag == NameKeys.warmTag;
