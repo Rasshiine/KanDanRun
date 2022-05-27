@@ -43,20 +43,24 @@ public class GameManagerView : MonoBehaviour
 
     private void Awake()
     {
-        startButton.onClick.AddListener(() => StartButton());
-        creditButton.onClick.AddListener(() => CreditButton());
-        howToPlayButton.onClick.AddListener(() => HowToPlayButton());
-        titleButton.onClick.AddListener(() => TitleBackButton());
-        rankingButton.onClick.AddListener(() => RankingButton());
+        if(SceneManager.GetActiveScene().name == NameKeys.mainScene)
+        {
+            startButton.onClick.AddListener(() => StartButton());
+            creditButton.onClick.AddListener(() => CreditButton());
+            howToPlayButton.onClick.AddListener(() => HowToPlayButton());
+            titleButton.onClick.AddListener(() => TitleBackButton());
+            rankingButton.onClick.AddListener(() => RankingButton());
+            retryButton.onClick.AddListener(() => RetryButton());
+        }
+
         pauseButton.onClick.AddListener(() => PauseButton(true));
         titleBackButton.onClick.AddListener(() => TitleBackButton());
         unPauseButton.onClick.AddListener(() => PauseButton(false));
-        retryButton.onClick.AddListener(() => RetryButton());
 
         openingButtons = new Button[]
         { startButton, creditButton, howToPlayButton };
         endingButtons = new Button[]
-        { titleButton,rankingButton };
+        { titleButton,rankingButton, retryButton };
 
 
         beatTweens = new Tween[openingButtons.Length];

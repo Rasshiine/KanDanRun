@@ -14,7 +14,6 @@ public class GameManagerModel : MonoBehaviour
     private float defaultPlayerSpeed = 5f;
     [SerializeField]private float playerSpeed = 0;
     private float maxSpeedMagnification = 4;
-    private float probabilityOfChangeWeather = 1f;
 
     public static bool isOutsideWarm;
 
@@ -33,7 +32,6 @@ public class GameManagerModel : MonoBehaviour
     public event Action<float> ShowScore;
     public event Action<float> ChangeSpeed;
     public event Action ActivateUIs;
-    public event Action ChangeWeather;
     public event Action<float> ChangeBGColor;
     public event Action<bool> ChangeWeatherWithNoMotion;
     public event Action SE_ChangeWeather;
@@ -72,7 +70,7 @@ public class GameManagerModel : MonoBehaviour
     }
 
     float nextInterval = 100;
-    // Update is called once per frame
+
     void Update()
     {
         if (currentState != GameState.Playing) return;
@@ -97,8 +95,6 @@ public class GameManagerModel : MonoBehaviour
 
     float Magnification()
     {
-        //float s = defaultPlayerSpeed * maxSpeedMagnification;
-        //if (playerSpeed > s) return s;
         return magnification * (level > 10 ? 0.3f : 1f);
     }
 
@@ -106,7 +102,6 @@ public class GameManagerModel : MonoBehaviour
     {
         isOutsideWarm = !isOutsideWarm;
         ChangeOutSideAirState?.Invoke(isOutsideWarm);
-        //ChangeWeather?.Invoke();
         ChangeBGColor?.Invoke(1);
     }
     public void GameOver()
