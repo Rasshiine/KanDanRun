@@ -85,7 +85,8 @@ public class ObjectCreatorModel : MonoBehaviour
                   Quaternion.identity);
             for (int j = 0; j < objectileCount; j++)
             {
-                GameObject g = objects[UnityEngine.Random.Range(0, objects.Length)];
+                int num = UnityEngine.Random.Range(0, TutorialManager.isTutorialMode ? 1 : objects.Length);
+                GameObject g = objects[num];
                 Instantiate(
                     g,
                     defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-2f, 2f))

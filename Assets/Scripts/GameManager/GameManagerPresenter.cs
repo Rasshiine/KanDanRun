@@ -15,7 +15,6 @@ public class GameManagerPresenter : MonoBehaviour
         //Model → View
         gameManagerModel.ShowScore += gameManagerView.ShowScore;
         gameManagerModel.ActivateUIs += gameManagerView.ActivateUIs;
-        gameManagerModel.ChangeWeather += gameManagerView.ChangeWeather;
         gameManagerModel.ChangeWeatherWithNoMotion += gameManagerView.ChangeWeatherWithNoMotion;
         gameManagerModel.GameStart += gameManagerView.StartButton;
         gameManagerModel.StartBlinking += gameManagerView.StartBlinking;

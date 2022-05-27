@@ -5772,7 +5772,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objects:
-  - {fileID: 3426304449075786643, guid: e9cd24dd6f43c487e95add17cd0755e6, type: 3}
   - {fileID: 1010526414368358557, guid: 8e7854e4ee32c4065a4283aecae709cd, type: 3}
   bg01Pos:
   - {fileID: 528631982}

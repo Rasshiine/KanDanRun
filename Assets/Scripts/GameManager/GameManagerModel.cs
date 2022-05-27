@@ -8,7 +8,7 @@ public class GameManagerModel : MonoBehaviour
 {
     //public static bool isGamePlaying = false;
     private int level = 0;
-    private float levelUpInterval = 100f;
+    private float levelUpInterval = 80f;
     private float magnification = 1f;
     private float score = 0;
     private float defaultPlayerSpeed = 5f;
@@ -83,7 +83,7 @@ public class GameManagerModel : MonoBehaviour
         if (score <= nextInterval) return;
 
         level++;
-        nextInterval = levelUpInterval * (level + 1) * (1 + (float)level / 10) /** UnityEngine.Random.Range(0.8f, 1.2f)*/;
+        nextInterval = levelUpInterval * (level + 1) * (1 + (float)level / 10) * UnityEngine.Random.Range(0.8f, 1.2f);
         StartBlinking?.Invoke();
 
         if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;

@@ -35,6 +35,7 @@ public class TutorialManager : MonoBehaviour
     void Start()
     {
         if (!isTutorialMode) return;
+        ChangeTimeStatus(true);
         StartCoroutine(Tutorial());
     }
 
