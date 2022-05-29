@@ -162,7 +162,6 @@ public class GameManagerView : MonoBehaviour
         {
             DOTween.Sequence()
             .Join(b[i].DOMoveX(-100f, 0.2f).SetEase(Ease.OutExpo))
-
             .Join(b[i].DOScaleX(-0.5f, 0.4f).SetEase(Ease.OutExpo))
             .Join(b[i].DORotate(new Vector3(0, 0, -10), 0.2f))
             .Append(b[i].DOAnchorPosX(1200f, 0.3f).SetEase(Ease.InQuint).SetRelative(false))
@@ -181,16 +180,10 @@ public class GameManagerView : MonoBehaviour
     {
         foreach (Button b in endingButtons)
             BeatAnimation(b.gameObject, DefaultPitch / GetPitch());
+        pauseButton.gameObject.SetActive(false);
         titleButton.gameObject.SetActive(true);
         rankingButton.gameObject.SetActive(true);
         retryButton.gameObject.SetActive(true);
-    }
-
-    public void ChangeWeather()
-    {
-        
-
-       
     }
 
     public void StartBlinking()

@@ -8,7 +8,7 @@ public class CreditManager : MonoBehaviour
     [SerializeField] private Transform bar;
 
     private float distanse = -95f;
-    private float time = 20f;
+    private float time = 30f;
     private float waitingTime = 5f;
 
     // Start is called before the first frame update

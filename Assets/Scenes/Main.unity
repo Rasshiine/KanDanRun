@@ -617,6 +617,7 @@ MonoBehaviour:
   flowchart: {fileID: 0}
   coldHouse: {fileID: 0}
   blackImage: {fileID: 0}
+  upArrow: {fileID: 0}
 --- !u!1 &156999015
 GameObject:
   m_ObjectHideFlags: 0

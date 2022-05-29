@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class ObjectCreatorModel : MonoBehaviour
 {
@@ -20,6 +20,7 @@ public class ObjectCreatorModel : MonoBehaviour
     private Vector3 cloudMovingVector = new Vector3(-0.2f, 0, 0);
     private float bg01Magnification = 0.2f;
     private float bg02Magnification = 0.4f;
+
 
     void Awake()
     {
@@ -135,7 +136,7 @@ public class ObjectCreatorModel : MonoBehaviour
             if (GameManagerModel.currentState != GameManagerModel.GameState.Finished)
             {
                 bg02Pos[i].position += moveDistanceVector * bg02Magnification * Time.deltaTime;
-                groundPos[i].position += moveDistanceVector * Time.deltaTime;
+                groundPos[i].position +=  moveDistanceVector * Time.deltaTime;
             }
 
             //家を動かす

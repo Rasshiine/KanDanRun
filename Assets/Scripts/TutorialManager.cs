@@ -14,6 +14,7 @@ public class TutorialManager : MonoBehaviour
 
     [SerializeField] GameObject coldHouse;
     [SerializeField] Image blackImage;
+    [SerializeField] Image upArrow;
 
     public static int progress = 0;
 
@@ -36,7 +37,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (!isTutorialMode) return;
         ChangeTimeStatus(true);
+        canColdHouseMove = false;
         StartCoroutine(Tutorial());
+        //upArrow.gameObject.SetActive(false);
+        //upArrow.rectTransform.DOAnchorPosY(10, 0.5f)
+        //    .SetLoops(-1, LoopType.Yoyo)
+        //    .SetRelative(true);
     }
 
     // Update is called once per frame
@@ -53,11 +59,8 @@ public class TutorialManager : MonoBehaviour
     //5:PlayerManagerView
     //6:
 
-
     IEnumerator Tutorial()
     {
-        //flowchart.SendFungusMessage("EnteredColdHouse");
-
         while (progress == 0) yield return null;
 
         canColdHouseMove = true;
@@ -65,14 +68,14 @@ public class TutorialManager : MonoBehaviour
 
         ChangeTimeStatus(false);
         blackImage.DOFade(0.25f, 0.2f);
+        upArrow.gameObject.SetActive(true);
+
         flowchart.SendFungusMessage("EnteredColdHouse");
 
-        //PlayerManagerView(2)
         while (progress == 2) yield return null;
 
         ChangeTimeStatus(true);
         blackImage.DOFade(0, 0.2f);
-        
         flowchart.SendFungusMessage("CloseChanged1");
         while (progress == 3) yield return null;
 
@@ -119,12 +122,9 @@ public class TutorialManager : MonoBehaviour
         ChangeHouseBeatStatus?.Invoke(status);
     }
 
-
     public void  SetProgress_(int v)
     {
         if (progress >= v || progress + 1 != v) return;
         progress = v;
     }
-
-   
 }

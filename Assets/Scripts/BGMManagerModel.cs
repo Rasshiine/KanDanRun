@@ -22,7 +22,7 @@ public class BGMManagerModel : MonoBehaviour
 
     public void IncreasePitch()
     {
-        audioSource.pitch += 0.02f;
+        audioSource.pitch += 0.0125f;
         bGMpitch = audioSource.pitch;
     }
     public float GetPitch() => audioSource.pitch;

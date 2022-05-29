@@ -111,6 +111,7 @@ public class GameManagerModel : MonoBehaviour
         SE_GameOver?.Invoke();
     }
 
+    public int GetLevel() => level;
     public int GetScore() => (int)score;
     public bool GetIsOutsideWarm() => isOutsideWarm;
 }

@@ -28,10 +28,11 @@ public class PlayerManagerPresenter : MonoBehaviour
 
         //Model → GameManagerModel
         playerManagerModel.GameOver += gameManagerModel.GameOver;
+        playerManagerModel.GetLevel += gameManagerModel.GetLevel;
 
         //GameManagerModel → Model
         gameManagerModel.ChangeOutSideAirState += playerManagerModel.ChangeOutSideAirState;
-
+        
         //Model → SEManagerModel
         playerManagerModel.PlayJustSound += sEManagerModel.Just;
 

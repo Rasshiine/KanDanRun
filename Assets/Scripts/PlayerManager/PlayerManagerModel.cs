@@ -23,6 +23,7 @@ public class PlayerManagerModel : MonoBehaviour
     private float exactlyTimer = 0f;
     private float limitOfExactlyTimer = 0.05f;
 
+    public event Func<int> GetLevel;
     public event Action<float> ShowHP;
     public event Action<bool> ChangeAnimation;
     public event Action GameOver;
@@ -64,7 +65,8 @@ public class PlayerManagerModel : MonoBehaviour
         
         if (isStressed && !isInvincible)
         {
-            playerHP -= damageSpeed * Time.deltaTime;
+            float ds = GetLevel() > 2 ? damageSpeed : damageSpeed / 2;
+            playerHP -= ds * Time.deltaTime;
             CancelInvoke(nameof(HealDamage));
             
             if (playerHP <= 0 && !TutorialManager.isTutorialMode)
