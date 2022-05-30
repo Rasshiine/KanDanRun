@@ -39,10 +39,10 @@ public class TutorialManager : MonoBehaviour
         ChangeTimeStatus(true);
         canColdHouseMove = false;
         StartCoroutine(Tutorial());
-        //upArrow.gameObject.SetActive(false);
-        //upArrow.rectTransform.DOAnchorPosY(10, 0.5f)
-        //    .SetLoops(-1, LoopType.Yoyo)
-        //    .SetRelative(true);
+        upArrow.DOFade(0f, 0);
+        upArrow.rectTransform.DOAnchorPosY(10, 0.5f)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetRelative(true);
     }
 
     // Update is called once per frame
@@ -68,7 +68,7 @@ public class TutorialManager : MonoBehaviour
 
         ChangeTimeStatus(false);
         blackImage.DOFade(0.25f, 0.2f);
-        upArrow.gameObject.SetActive(true);
+        upArrow.DOFade(1, 0.2f);
 
         flowchart.SendFungusMessage("EnteredColdHouse");
 
@@ -76,6 +76,7 @@ public class TutorialManager : MonoBehaviour
 
         ChangeTimeStatus(true);
         blackImage.DOFade(0, 0.2f);
+        upArrow.DOFade(0, 0.2f);
         flowchart.SendFungusMessage("CloseChanged1");
         while (progress == 3) yield return null;
 
