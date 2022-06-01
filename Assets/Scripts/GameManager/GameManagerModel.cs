@@ -39,7 +39,7 @@ public class GameManagerModel : MonoBehaviour
     public event Action SE_GameOver;
     public event Action IncreasePitch;
     public event Action GameStart;
-    public event Action StartBlinking;
+    public event Action<bool> StartBlinking;
 
     void Awake()
     {
@@ -83,8 +83,8 @@ public class GameManagerModel : MonoBehaviour
         if (score <= nextInterval) return;
 
         level++;
-        nextInterval = levelUpInterval * (level + 1) * (1 + (float)level / 10) * UnityEngine.Random.Range(0.8f, 1.2f);
-        StartBlinking?.Invoke();
+        nextInterval = levelUpInterval * (level + 1) * (1 + (float)level / 10) * UnityEngine.Random.Range(0.95f, 1.05f);
+        StartBlinking?.Invoke(isOutsideWarm);
 
         if (playerSpeed > defaultPlayerSpeed * maxSpeedMagnification) return;
         playerSpeed += Magnification();
@@ -95,7 +95,7 @@ public class GameManagerModel : MonoBehaviour
 
     float Magnification()
     {
-        return magnification * (level > 10 ? 0.3f : 1f);
+        return magnification * (level > 5 ? 0.3f : 1f);
     }
 
     public void _ChangeWeather()

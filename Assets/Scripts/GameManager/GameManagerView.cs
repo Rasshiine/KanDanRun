@@ -34,6 +34,9 @@ public class GameManagerView : MonoBehaviour
     [SerializeField] private SpriteRenderer weatherSpr;
     private Vector3 rotateVector = new Vector3(0, 0, -180);
 
+    private Color32 black = new Color32(0, 0, 0, 0);
+    private Color32 white = new Color32(255, 255, 255, 0);
+
     public event Action SE_StartButton;
     public event Action SE_BackButton;
     public event Action StartScene;
@@ -43,7 +46,7 @@ public class GameManagerView : MonoBehaviour
 
     private void Awake()
     {
-        if(SceneManager.GetActiveScene().name == NameKeys.mainScene)
+        if (SceneManager.GetActiveScene().name == NameKeys.mainScene)
         {
             startButton.onClick.AddListener(() => StartButton());
             creditButton.onClick.AddListener(() => CreditButton());
@@ -186,8 +189,9 @@ public class GameManagerView : MonoBehaviour
         retryButton.gameObject.SetActive(true);
     }
 
-    public void StartBlinking()
+    public void StartBlinking(bool isOutsideWarm)
     {
+        weatherSpr.DOColor(isOutsideWarm ? black : white, 0);
         weatherSpr.DOFade(0.3f, 0.2f)
             .SetLoops(6, LoopType.Yoyo)
             .OnComplete(() =>

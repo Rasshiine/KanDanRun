@@ -90,7 +90,7 @@ public class ObjectCreatorModel : MonoBehaviour
                 GameObject g = objects[num];
                 Instantiate(
                     g,
-                    defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-2f, 2f))
+                    defaultBarPos + Vector3.right * (distance * j + UnityEngine.Random.Range(-1.5f, 1.5f))
                     + g.transform.position,
                     Quaternion.identity)
                     .transform.parent
