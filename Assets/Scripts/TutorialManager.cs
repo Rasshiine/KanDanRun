@@ -39,10 +39,8 @@ public class TutorialManager : MonoBehaviour
         ChangeTimeStatus(true);
         canColdHouseMove = false;
         StartCoroutine(Tutorial());
-        //downArrow.DOFade(0f, 0);
-        //downArrow.rectTransform.DOAnchorPosY(10, 0.5f)
-        //    .SetLoops(-1, LoopType.Yoyo)
-        //    .SetRelative(true);
+        bool b = SystemInfo.deviceModel.ToString().Contains("iPhone");
+        flowchart.SetBooleanVariable("isiPhone", b);
     }
 
     // Update is called once per frame

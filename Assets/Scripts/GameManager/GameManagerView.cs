@@ -72,7 +72,7 @@ public class GameManagerView : MonoBehaviour
             beatTweens[i] = BeatAnimation(openingButtons[i].gameObject, DefaultPitch);
         }
     }
-
+    
     public void StartButton()
     {
         valueCanvas.gameObject.SetActive(true);
